@@ -33,7 +33,6 @@ public class IgTreeViewer {
      */
     @SuppressWarnings("unused")
     public static void main(String[] args) {
-        disableAccessWarnings();
         if ((args != null) && (args.length > 0)) {
             xmlFilePath = args[0];
             if (args.length > 1) {
@@ -50,25 +49,6 @@ public class IgTreeViewer {
             IgTreeViewerFrame igTreeViewerFrame = new IgTreeViewerFrame(xmlFilePath);
         } else {
             IgTreeViewerFrame igTreeViewerFrame2 = new IgTreeViewerFrame();
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public static void disableAccessWarnings() {
-        try {
-            Class unsafeClass = Class.forName("sun.misc.Unsafe");
-            Field field = unsafeClass.getDeclaredField("theUnsafe");
-            field.setAccessible(true);
-            Object unsafe = field.get(null);
-
-            Method putObjectVolatile = unsafeClass.getDeclaredMethod("putObjectVolatile", Object.class, long.class, Object.class);
-            Method staticFieldOffset = unsafeClass.getDeclaredMethod("staticFieldOffset", Field.class);
-
-            Class loggerClass = Class.forName("jdk.internal.module.IllegalAccessLogger");
-            Field loggerField = loggerClass.getDeclaredField("logger");
-            Long offset = (Long) staticFieldOffset.invoke(unsafe, loggerField);
-            putObjectVolatile.invoke(unsafe, loggerClass, offset, null);
-        } catch (Exception ignored) {
         }
     }
 
