@@ -1,0 +1,2 @@
+crossPaths := false
+autoScalaLibrary := false
