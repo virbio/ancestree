@@ -23,12 +23,7 @@ package ch.irb.kabat;
 import java.io.IOException;
 import java.util.TreeMap;
 
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
+
 import org.apache.log4j.Logger;
 
 public class ProcessKabatNumbering {
@@ -50,16 +45,14 @@ public class ProcessKabatNumbering {
         }
     }
 
-    public ProcessKabatNumbering(String aaSequence) throws ClientProtocolException, IOException {
+    public ProcessKabatNumbering(String aaSequence) throws  IOException {
         // TO KEEP in cas it happens again!! throw new IOException("Until the Abnum website doesnt work");
         this.aaSequence = aaSequence;
         for (int i = 0; i < aaSequence.length(); i++) {
             fromPositionToAA.put(i, String.valueOf(aaSequence.charAt(i)));
         }
         String aaSequenceWithoutDeletion = this.aaSequence.replaceAll("-", "");
-        launchKabatWebSite(aaSequenceWithoutDeletion);
 
-        if (fromPositionToKabatnumbering.size()==0) throw new ClientProtocolException("No kabat numbering found via Abnum website");
 
         logger.debug("Number of positions "+fromPositionToKabatnumbering.size());
         /*for (int pos: fromPositionToKabatnumbering.keySet()){
@@ -67,26 +60,6 @@ public class ProcessKabatNumbering {
         }*/
     }
 
-    private void launchKabatWebSite(String aaSequenceWithoutDeletion) throws ClientProtocolException, IOException {
-        HttpClient httpclient = new DefaultHttpClient();
-        try {
-            //http://www.bioinf.org.uk/cgi-bin/abnum/abnum.pl?plain=1&aaseq= Before 28.11.19, NOW.cgi
-           // http://www.bioinf.org.uk/abs/abnum/abnumws_pl.txt
-            HttpGet httpget = new HttpGet("http://www.bioinf.org.uk/abs/abnum/abnum.cgi??plain=1&aaseq="
-                   + aaSequenceWithoutDeletion + "&scheme=-k");
-            // logger.debug("executing request " + httpget.getURI());
-            // Create a response handler
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
-            String responseBody = httpclient.execute(httpget, responseHandler);
-            storeKabatNumbering(responseBody);
-
-        } finally {
-            // When HttpClient instance is no longer needed,
-            // shut down the connection manager to ensure
-            // immediate deallocation of all system resources
-            httpclient.getConnectionManager().shutdown();
-        }
-    }
 
     private void storeKabatNumbering(String kabatOutput) {
         String[] entry = kabatOutput.split("\n");
