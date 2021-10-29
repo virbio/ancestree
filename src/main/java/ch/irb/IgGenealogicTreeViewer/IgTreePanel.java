@@ -71,7 +71,7 @@ public class IgTreePanel extends JPanel {
     private boolean everyThingIsGrey = false;
     private int widthOfNodeShape = 116;
     private int heightOfNodeShape = 50;
-    private int fontSizeNode = 11;//20
+    private int fontSizeNode = 20;
     private int fontSizeMutationsNumber = 20;
     private boolean smaller = false;
     private File xmlFile;
@@ -833,10 +833,10 @@ public class IgTreePanel extends JPanel {
             mult = 1.25f;// 1.25
         }
         if (EC50 == null && (comment == null || (comment != null && !node.isShowComment1()))) {
-            int yString = (int) (y + (mult * heightOfNodeShape) - (rect.getHeight()*div));
+            int yString = (int)(y + heightOfNodeShape * 0.5 + rect.getHeight() * 0.5); //(y + (mult * heightOfNodeShape) - (rect.getHeight()*div));
             g.drawString(nodeIdToPrint, xString, yString);
         }
-        // Print the EC 50 and comment
+    // Print the EC 50 and comment
         else {
             mult = 1.5f;// 1.5
             if (smaller) {
