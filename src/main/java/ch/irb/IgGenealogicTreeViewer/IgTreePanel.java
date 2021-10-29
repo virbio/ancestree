@@ -74,7 +74,6 @@ public class IgTreePanel extends JPanel {
     private int fontSizeNode = 20;
     private int fontSizeMutationsNumber = 20;
     private boolean smaller = false;
-    private File xmlFile;
     private ArrayList<NodeGraph> allNodeGraphs = new ArrayList<NodeGraph>();
     private String rootNodeSequence;
     private NodeGraph rootNode;
@@ -117,7 +116,6 @@ public class IgTreePanel extends JPanel {
         this.setBackground(Color.white);
         this.getSetCurrentDir = getSetCurrentDir;
         // Here we get the path of the project the user loaded
-        setXmlFile(new File(igTreeReader.getXmlFilePath()));
         isDNA = igTreeReader.isDNA();
         setHasImmuInfo(igTreeReader.hasImmuInfo());
 
@@ -1296,20 +1294,6 @@ public class IgTreePanel extends JPanel {
      */
     public void setNewDataSaved(boolean isNewDataSaved) {
         this.isNewDataSaved = isNewDataSaved;
-    }
-
-    /**
-     * @return the xmlFile
-     */
-    public File getXmlFile() {
-        return xmlFile;
-    }
-
-    /**
-     * @param xmlFile the xmlFile to set
-     */
-    public void setXmlFile(File xmlFile) {
-        this.xmlFile = xmlFile;
     }
 
     /**

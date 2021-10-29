@@ -24,9 +24,6 @@ import java.util.TreeMap;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 import ch.irb.IgGenealogicTreeViewer.AncesTreeConverter.InputParser;
 import org.apache.log4j.Logger;
@@ -62,23 +59,8 @@ public class IgTreeReader {
     private TreeMap<Integer, ArrayList<NodeGraph>> fromLevelToNodes = new TreeMap<>();
     private ArrayList<Integer> years = new ArrayList<>();
 
-    public IgTreeReader(String xmlFilePath, boolean isDnamlTree) throws JAXBException, Exception {
-        this.xmlFilePath = xmlFilePath;
-        if (isDnamlTree) {
-            readAndProcessTreeDnaml();
-        } else {
-            readAndProcessTreeAncesTree();
-        }
-    }
-
-    public void readAndProcessTreeDnaml() throws Exception {
-        //Before 2016: IgTreeMaker.class before april 2020 DnamlOutputParser.class
-        JAXBContext context = JAXBContext.newInstance(InputParser.class);
-        Unmarshaller um = context.createUnmarshaller();
-        // logger.debug("XML file path is: " + xmlFilePath);
-        FileReader fileReader = new FileReader(xmlFilePath);
-        //Before 2016: IgTreeMaker, before april 2020 DnamlOutputParser
-        InputParser dnamlParser = (InputParser) um.unmarshal(fileReader);
+    public IgTreeReader(InputParser dnamlParser) throws Exception {
+              
         this.projectName = dnamlParser.getProjectName();
         this.rootNode = dnamlParser.getRootNode();
         this.previousBPNames = dnamlParser.getPreviousBPNames();
@@ -90,24 +72,9 @@ public class IgTreeReader {
         setChildrenPosition(); // set the x position for the nodes
     }
 
-    /*
-     * Not used anymore (from 2016), but to keep in case
-     */
-    public void readAndProcessTreeAncesTree() throws Exception {
-        JAXBContext context = JAXBContext.newInstance(InputParser.class);
-        Unmarshaller um = context.createUnmarshaller();
-        // logger.debug("XML file path is: " + xmlFilePath);
-        FileReader fileReader = new FileReader(xmlFilePath);
-        InputParser igTreeMaker = (InputParser) um.unmarshal(fileReader);
-        this.projectName = igTreeMaker.getProjectName();
-        this.rootNode = igTreeMaker.getRootNode();
-        this.previousBPNames = igTreeMaker.getPreviousBPNames();
-        setDNA(igTreeMaker.isDNA());
-        createANodeGraph(rootNode, true);
-        setChildrenForGraphNode(rootNode);
-        setNodesbyLevel(); // store in a tree map the nodes by their level
-        setChildrenPosition(); // set the x position for the nodes
-    }
+
+
+ 
 
     public void createANodeGraph(Node node, boolean isRoot) throws Exception {
         //BUG fixed the 07.05.20 in the case of big tree (>500 igs) different BPs can have the same sequence with an Ig

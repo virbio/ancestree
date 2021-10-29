@@ -48,10 +48,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SpringLayout;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import ch.irb.IgGenealogicTreeViewer.AncesTreeConverter.IgphymlTreeChooserFrame;
 import org.apache.log4j.Logger;
@@ -76,17 +72,13 @@ import ch.irb.saveImages.SaveImageAsPngListener;
 @SuppressWarnings("serial")
 public class IgTreeViewerFrame extends JFrame implements WindowListener {
     static Logger logger = Logger.getLogger(IgTreeViewerFrame.class);
-    private String xmlFilePath = null;
     private IgTreeViewerFrame igTreeViewerFrame = this;
     private GetSetCurrentDirectory getSetCurrentDir = new GetSetCurrentDirectory();
     private IgTreeReader igTreeReader = null;
     private IgTreePanel igTreePanel = null;
     private LegendPanel legendPanel = null;
     private JScrollPane jScrollPane = null;
-    private JMenuItem newTreeItem = new JMenuItem("Create new tree (dnaml)");
     private JMenuItem newIgphymlTreeItem = new JMenuItem("Create new tree (IgPhyML)");
-    private JMenuItem openItem = new JMenuItem("Load tree");
-    private JMenuItem saveTreeItem = new JMenuItem("Save tree");
     private JMenuItem loadCLIPData = new JMenuItem("Load BASELINe data");
     private JMenuItem alignmentItem = new JMenuItem("Alignment");
     private CLIPdata clipData = null;
@@ -95,7 +87,6 @@ public class IgTreeViewerFrame extends JFrame implements WindowListener {
     private JMenuItem saveItemWithLegend = new JMenuItem("Export image (with legend) as .PNG");
     private JMenuItem saveItemEPS = new JMenuItem("Export image as PDF/SVG/EPS");
     private JMenuItem saveLegendEPS = new JMenuItem("Export legend as PDF/SVG/EPS");
-    private SaveTreeListener saveTreeListener;
     private AlignmentListener alignmentListener;
     private SaveImageAsPngListener saveItemListenerPanel;
     private SaveImageAsPngListener saveItemListenerWithLegend;
@@ -134,13 +125,8 @@ public class IgTreeViewerFrame extends JFrame implements WindowListener {
 
         // Add a menu
         JMenu file = new JMenu("Menu");
-        file.add(newTreeItem);
-        newTreeItem.addActionListener(new CreateNewTreeListener());
         file.add(newIgphymlTreeItem);
         newIgphymlTreeItem.addActionListener(new CreateNewIgphymlTreeListener());
-        file.add(openItem);
-        saveTreeItem.setEnabled(false);
-        file.add(saveTreeItem);
         file.add(alignmentItem);
         alignmentItem.setEnabled(false);
         file.add(loadCLIPData);
@@ -165,8 +151,6 @@ public class IgTreeViewerFrame extends JFrame implements WindowListener {
         saveLegendEPS.setEnabled(false);
         exportMenu.add(saveLegendEPS);
 
-        // adding action listener to menu items
-        openItem.addActionListener(new LoadTreeListener());
 
         JMenuBar bar = new JMenuBar();
         setJMenuBar(bar);
@@ -176,78 +160,7 @@ public class IgTreeViewerFrame extends JFrame implements WindowListener {
         setVisible(true);
     }
 
-    /**
-     * The second constructor (with the XML file of the tree such as argument)
-     * is used when we launch the GUI from scratch (without selecting the fasta
-     * files)
-     */
-    public IgTreeViewerFrame(String xmlFilePath) {
-        this();
-        this.xmlFilePath = xmlFilePath;
-        try {
-            legendPanel = new LegendPanel(igTreePanel);
-            igTreeReader = new IgTreeReader(xmlFilePath, isDnamlTree);
-            igTreePanel = new IgTreePanel(igTreeReader, getSetCurrentDir);
-            legendPanel.setColorByYear(igTreePanel.getColorByYear());
-            String title = "AncesTree (ig tree viewer)              ";
-            if (!isDnamlTree) {
-                title = "AncesTree              ";
-            }
-            setTitle(title + igTreeReader.getProjectName());
-            saveTreeListener = new SaveTreeListener();
-            alignmentListener = new AlignmentListener();
-            saveItemListenerPanel = new SaveImageAsPngListener(igTreePanel, getSetCurrentDir);
-            saveItemListenerWithLegend = new SaveImageAsPngListener(getContentPane(), getSetCurrentDir);
-            exportAsEPSListenerPanel = new ExportAsEPSListener(igTreePanel, getSetCurrentDir);
-            exportAsEPSListenerLegend = new ExportAsEPSListener(legendPanel, getSetCurrentDir);
-            saveTreeItem.addActionListener(saveTreeListener);
-            alignmentItem.addActionListener(alignmentListener);
-            saveItem.addActionListener(saveItemListenerPanel);
-            saveItemWithLegend.addActionListener(saveItemListenerWithLegend);
-            saveItemEPS.addActionListener(exportAsEPSListenerPanel);
-            saveLegendEPS.addActionListener(exportAsEPSListenerLegend);
-            jScrollPane = new JScrollPane();
-            jScrollPane.getViewport().setView(igTreePanel);
-            jScrollPane.addMouseWheelListener(new MyMouseWheelListerner());
-            this.getContentPane().add(jScrollPane);
-            this.getContentPane().add(legendPanel);
-            layout.putConstraint(SpringLayout.EAST, legendPanel, 5, SpringLayout.EAST, contentPane);
-            layout.putConstraint(SpringLayout.WEST, jScrollPane, 5, SpringLayout.WEST, contentPane);
-
-            layout.putConstraint(SpringLayout.EAST, jScrollPane, 5, SpringLayout.WEST, legendPanel);
-            layout.putConstraint(SpringLayout.NORTH, jScrollPane, 5, SpringLayout.NORTH, contentPane);
-
-            layout.putConstraint(SpringLayout.WEST, contentPane, 5, SpringLayout.WEST, jScrollPane);
-            layout.putConstraint(SpringLayout.SOUTH, contentPane, 5, SpringLayout.SOUTH, jScrollPane);
-            layout.putConstraint(SpringLayout.NORTH, contentPane, 5, SpringLayout.NORTH, jScrollPane);
-
-            saveTreeItem.setEnabled(true);
-            saveItem.setEnabled(true);
-            saveItemWithLegend.setEnabled(true);
-            saveItemEPS.setEnabled(true);
-            saveLegendEPS.setEnabled(true);
-            if (igTreePanel.isImgtFormatLoaded()) {
-                alignmentItem.setEnabled(true);
-                loadCLIPData.setEnabled(true);
-            } else {
-                alignmentItem.setEnabled(false);
-                loadCLIPData.setEnabled(false);
-            }
-            setVisible(true);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JAXBException e) {
-            JOptionPane.showMessageDialog(new JFrame(), "The XML file you loaded was not processed by dnaml.",
-                    "Wrong XML file", JOptionPane.ERROR_MESSAGE);
-            return;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(new JFrame(), e.getMessage(),
-                    "Tree too big", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-    }
+   
 
     private String selectFiles() {
         JFileChooser fileChooser = new JFileChooser();
@@ -261,29 +174,11 @@ public class IgTreeViewerFrame extends JFrame implements WindowListener {
         return null;
     }
 
-    /**
-     * This class is used to load a XML file to display a new tree in the GUI
-     */
-    private class LoadTreeListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent e) {
-            String newXMLFile = selectFiles();
-            if (newXMLFile != null) {
-                updateIgTreeViewerFrame(newXMLFile);
-            }
-        }
-
-    }
-
-    public void updateIgTreeViewerFrame(String newXMLFile) {
-        xmlFilePath = newXMLFile;
+ public void updateIgTreeViewerFrame(InputParser inputParser) {
         try {
-            igTreeReader = new IgTreeReader(newXMLFile, isDnamlTree);
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        } catch (JAXBException e) {
-            e.printStackTrace();
+            igTreeReader = new IgTreeReader(inputParser);
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(new JFrame(), e.getMessage(),
                     "Tree too big", JOptionPane.ERROR_MESSAGE);
             return;
@@ -324,25 +219,21 @@ public class IgTreeViewerFrame extends JFrame implements WindowListener {
             // because the image from the
             // previous tree will be saved, not the new
             // one
-            saveTreeItem.removeActionListener(saveTreeListener);
             alignmentItem.removeActionListener(alignmentListener);
             saveItem.removeActionListener(saveItemListenerPanel);
             saveItemWithLegend.removeActionListener(saveItemListenerWithLegend);
             saveItemEPS.removeActionListener(exportAsEPSListenerPanel);
             saveLegendEPS.removeActionListener(exportAsEPSListenerLegend);
         }
-        saveTreeItem.setEnabled(true);
         saveItem.setEnabled(true);
         saveItemEPS.setEnabled(true);
         saveItemWithLegend.setEnabled(true);
         saveLegendEPS.setEnabled(true);
-        saveTreeListener = new SaveTreeListener();
         alignmentListener = new AlignmentListener();
         saveItemListenerPanel = new SaveImageAsPngListener(igTreePanel, getSetCurrentDir);
         saveItemListenerWithLegend = new SaveImageAsPngListener(getContentPane(), getSetCurrentDir);
         exportAsEPSListenerPanel = new ExportAsEPSListener(igTreePanel, getSetCurrentDir);
         exportAsEPSListenerLegend = new ExportAsEPSListener(legendPanel, getSetCurrentDir);
-        saveTreeItem.addActionListener(saveTreeListener);
         alignmentItem.addActionListener(alignmentListener);
         saveItem.addActionListener(saveItemListenerPanel);
         saveItemWithLegend.addActionListener(saveItemListenerWithLegend);
@@ -358,7 +249,7 @@ public class IgTreeViewerFrame extends JFrame implements WindowListener {
         setVisible(true);
 
     }
-
+   
     private class CreateNewTreeListener implements ActionListener {
 
         @Override
@@ -387,62 +278,9 @@ public class IgTreeViewerFrame extends JFrame implements WindowListener {
 
     }
 
-    private class SaveTreeListener implements ActionListener {
+  
 
-        @Override
-        public void actionPerformed(ActionEvent arg0) {
-            saveTree();
-        }
-
-    }
-
-    private void saveTree() {
-        try {
-            String tmpFilePath = xmlFilePath + "_TMP.xml";
-            JAXBContext context = JAXBContext.newInstance(InputParser.class);
-            Unmarshaller um = context.createUnmarshaller();
-            FileReader fileReader = new FileReader(xmlFilePath);
-            InputParser igTreeMaker = (InputParser) um.unmarshal(fileReader);
-            // Modify the Node into IgTreeMaker, if the user add the EC 50
-            ArrayList<NodeGraph> nodeGraphs = igTreePanel.getAllNodeGraphs();
-            Node rootNode = igTreeMaker.getRootNode();
-            for (NodeGraph nodeGraph : nodeGraphs) {
-                // we process this only when the use add or change the EC 50,
-                // comment1 and comment2
-                String infoFromNode = nodeGraph.getEC50();
-                String dataType = "EC50";
-                processNodeToAddInfo(rootNode, nodeGraph, infoFromNode, dataType);
-                infoFromNode = nodeGraph.getComment1();
-                dataType = "comment1";
-                processNodeToAddInfo(rootNode, nodeGraph, infoFromNode, dataType);
-                infoFromNode = nodeGraph.getComment2();
-                dataType = "comment2";
-                processNodeToAddInfo(rootNode, nodeGraph, infoFromNode, dataType);
-            }
-            Marshaller m = context.createMarshaller();
-            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-            Writer w = null;
-            w = new FileWriter(tmpFilePath);
-            m.marshal(igTreeMaker, w);
-            fileReader.close();
-            w.close();
-
-            // Once everything is complete, delete old file..
-            File oldFile = new File(xmlFilePath);
-            oldFile.delete();
-
-            // And rename tmp file's name to old file name
-            File newFile = new File(tmpFilePath);
-            newFile.renameTo(oldFile);
-
-        } catch (JAXBException | IOException e) {
-            e.printStackTrace();
-        }
-        // we dont want the user to be prompt again if he close the window and
-        // had already saved the tree
-        igTreePanel.setNewDataSaved(false);
-    }
+   
 
     private void processNodeToAddInfo(Node node, NodeGraph nodeGraph, String infoFromNode, String dataType) {
         String info = null;
@@ -583,19 +421,7 @@ public class IgTreeViewerFrame extends JFrame implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent arg0) {
-        // Check if the data were modified, if yes we open a dialog to allow the
-        // user to save the tree
-        if (xmlFilePath != null) {
-            if (igTreePanel.isNewDataSaved()) {
-                Object[] options = {"Save tree", "Don't save tree"};
-                int n = JOptionPane.showOptionDialog(this, "Do you want to save the tree with the changes you made? ",
-                        "Save tree", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
-                        options[0]);
-                if (n == JOptionPane.YES_OPTION) {
-                    saveTree();
-                }
-            }
-        }
+   
         // here we want to check that the user has saved the tree with the new
         // changes
         System.exit(EXIT_ON_CLOSE);

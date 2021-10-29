@@ -15,11 +15,6 @@
  */
 package ch.irb.nodes;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
 
 import org.apache.log4j.Logger;
 
@@ -29,79 +24,48 @@ import ch.irb.translation.Translator;
  * @author Mathilde This class will contains the main characteristics of a node used in the algo to create the tree AND
  *         used in the GUI
  */
-@XmlRootElement(name = "node")
-@XmlType(propOrder = {"cellInfo", "immunizationInfo", "sequence", "proteinSequence", "level",
-        "numberOfNucMutationsWithParent", "mutationsWithParent", "numberOfAAMutationsWithParent",
-        "doubleMutationInformation", "reverseInformation", "insertionNumber", "deletionNumber", "cdr_fr_regions",
-        "imgtFormatSequence", "EC50", "comment1", "showComment1", "comment2"})
 public class NodeObject {
     static Logger logger = Logger.getLogger(NodeObject.class);
 
-    @XmlTransient
     protected boolean isRoot = false;
-    @XmlTransient
     protected boolean isDNA = true;
-    @XmlAttribute(name = "name")
     protected String nodeId = "";
-    @XmlElement(name = "dnaSequence")
     protected String sequence;
-    @XmlElement
     protected String proteinSequence;
-    @XmlElement(name = "cdr_fr_regions", required = false)
     protected String cdr_fr_regions;
-    @XmlElement(name = "imgtFormatSequence", required = false)
     protected String imgtFormatSequence;
 
-    @XmlElement(required = false)
     protected String cellInfo = null;
-    @XmlElement(required = false)
     protected String immunizationInfo = null;
-    @XmlElement(required = false)
     protected String EC50 = null;
-    @XmlElement(required = false)
     protected String comment1 = null;
-    @XmlElement(required = false)
     protected boolean showComment1 = true;
-    @XmlElement(required = false)
     protected String comment2 = null;
 
 
-    @XmlElement(name = "reverseMutation", required = false)
     protected String reverseInformation = null;
-    @XmlElement(name = "doubleMutation", required = false)
     protected String doubleMutationInformation = null;
-    @XmlElement(name = "mutationsWithParent", required = false)
     protected String mutationsWithParent = null;
-    @XmlElement(name = "numberOfNucleotidicMutations")
     protected int numberOfNucMutationsWithParent = 0;
-    @XmlElement(name = "numberOfAAMutations")
     protected int numberOfAAMutationsWithParent = 0;
 
     // for graphic purpose
-    @XmlTransient
     protected int level = 0;
 
-    @XmlElement
     protected int deletionNumber;
 
-    @XmlElement
     protected int insertionNumber;
 
-    @XmlTransient
     protected boolean hasReversion = false;
-    @XmlTransient
     protected boolean hasDeletion = false;
-    @XmlTransient
     protected boolean hasInsertion = false;
 
-    @XmlTransient
     protected boolean isBP = false;
 
     public NodeObject() {
 
     }
 
-    @XmlTransient
     public boolean isRoot() {
         return isRoot;
     }
@@ -110,7 +74,6 @@ public class NodeObject {
         this.isRoot = isRoot;
     }
 
-    @XmlTransient
     public String getNodeId() {
         return nodeId;
     }
@@ -122,7 +85,6 @@ public class NodeObject {
     /**
      * @return the isBP
      */
-    @XmlTransient
     public boolean isBP() {
         return isBP;
     }
@@ -134,7 +96,6 @@ public class NodeObject {
         this.isBP = isBP;
     }
 
-    @XmlTransient
     public String getSequence() {
         return sequence;
     }
@@ -151,7 +112,6 @@ public class NodeObject {
         // logger.debug("Protein sequence for " + nodeId + " is: " + proteinSequence);
     }
 
-    @XmlElement
     public int getLevel() {
         return level;
     }
@@ -167,7 +127,6 @@ public class NodeObject {
     /**
      * @return the isDNA
      */
-    @XmlTransient
     public boolean isDNA() {
         return isDNA;
     }
@@ -184,7 +143,6 @@ public class NodeObject {
         this.mutationsWithParent = mutationsWithParent;
     }
 
-    @XmlTransient
     public String getMutationsWithParent() {
         return mutationsWithParent;
     }
@@ -228,7 +186,6 @@ public class NodeObject {
     /**
      * @return the numberOfNucMutationsWithParent
      */
-    @XmlTransient
     public int getNumberOfNucMutationsWithParent() {
         return numberOfNucMutationsWithParent;
     }
@@ -236,7 +193,6 @@ public class NodeObject {
     /**
      * @return the numberOfAAMutationsWithParent
      */
-    @XmlTransient
     public int getNumberOfAAMutationsWithParent() {
         return numberOfAAMutationsWithParent;
     }
@@ -244,7 +200,6 @@ public class NodeObject {
     /**
      * @return the reverseInformation
      */
-    @XmlTransient
     public String getReverseInformation() {
         return reverseInformation;
     }
@@ -252,7 +207,6 @@ public class NodeObject {
     /**
      * @return the doubleMutationInformation
      */
-    @XmlTransient
     public String getDoubleMutationInformation() {
         return doubleMutationInformation;
     }
@@ -260,7 +214,6 @@ public class NodeObject {
     /**
      * @return the cellInfo
      */
-    @XmlTransient
     public String getCellInfo() {
         return cellInfo;
     }
@@ -268,7 +221,6 @@ public class NodeObject {
     /**
      * @return the immunizationInfo
      */
-    @XmlTransient
     public String getImmunizationInfo() {
         return immunizationInfo;
     }
@@ -276,7 +228,6 @@ public class NodeObject {
     /**
      * @return the eC50
      */
-    @XmlTransient
     public String getEC50() {
         return EC50;
     }
@@ -292,7 +243,6 @@ public class NodeObject {
     /**
      * @return the comment1
      */
-    @XmlTransient
     public String getComment1() {
         return comment1;
     }
@@ -307,7 +257,6 @@ public class NodeObject {
     /**
      * @return the showComment1
      */
-    @XmlTransient
     public boolean isShowComment1() {
         return showComment1;
     }
@@ -322,7 +271,6 @@ public class NodeObject {
     /**
      * @return the comment2
      */
-    @XmlTransient
     public String getComment2() {
         return comment2;
     }
@@ -337,7 +285,6 @@ public class NodeObject {
     /**
      * @return the deletionNumber
      */
-    @XmlTransient
     public int getDeletionNumber() {
         return deletionNumber;
     }
@@ -352,7 +299,6 @@ public class NodeObject {
     /**
      * @return the insertionNumber
      */
-    @XmlTransient
     public int getInsertionNumber() {
         return insertionNumber;
     }
@@ -438,7 +384,6 @@ public class NodeObject {
     /**
      * @return the cdr_fr_regions
      */
-    @XmlTransient
     public String getCdr_fr_regions() {
         return cdr_fr_regions;
     }
@@ -453,13 +398,11 @@ public class NodeObject {
     /**
      * @return the imgtFormatSequence
      */
-    @XmlTransient
     public String getImgtFormatSequence() {
         return imgtFormatSequence;
     }
 
 
-    @XmlTransient
     public String getImgtFormatSequenceWithoutCDR3() {
         if (imgtFormatSequence == null) {
             return null;

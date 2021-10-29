@@ -33,23 +33,8 @@ public class IgTreeViewer {
      */
     @SuppressWarnings("unused")
     public static void main(String[] args) {
-        if ((args != null) && (args.length > 0)) {
-            xmlFilePath = args[0];
-            if (args.length > 1) {
-                xmlFilePath = "";
-                int index = 0;
-                for (String arg : args) {
-                    xmlFilePath += arg;
-                    if (index < args.length) {
-                        xmlFilePath += " ";
-                    }
-                    index++;
-                }
-            }
-            IgTreeViewerFrame igTreeViewerFrame = new IgTreeViewerFrame(xmlFilePath);
-        } else {
+        
             IgTreeViewerFrame igTreeViewerFrame2 = new IgTreeViewerFrame();
-        }
     }
 
 }

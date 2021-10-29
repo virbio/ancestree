@@ -32,20 +32,12 @@ import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@XmlRootElement(namespace = "ch.irb.IgGenealogicTreeMaker")
 public class InputParser {
 
     static Logger logger = Logger.getLogger(InputParser.class);
@@ -55,28 +47,23 @@ public class InputParser {
     /**
      * The project name.
      */
-    @XmlAttribute(name = "projectName")
+    // @XmlAttribute(name = "projectName")
     private String projectName = "test_dnaml";
 
     /**
      * The root node.
      */
-    @XmlElement(name = "GermLine")
     public Node rootNode = null;
 
-    @XmlElement(name = "previousBPNames")
     public String previousBPNames = "";
 
-    @XmlElement(name = "isDNA")
     public boolean isDNA = true;
 
-    @XmlElement(name = "hasReadsInId")
     private boolean hasReadsInId = false;
 
     /**
      * The ig tree_xml.
      */
-    @XmlTransient
     private String igTree_xml = "";
 
     private ArrayList<String> bpIsIg = new ArrayList<>();
@@ -97,31 +84,6 @@ public class InputParser {
     private IgPhyMLParser igPhyMLParser;
     private HashSet<String> nodeNames = new HashSet<>();
 
-    public static void main(String[] args) {
-        try {
-            @SuppressWarnings("unused")
-            //For dnaml input
-            /*InputParser parser = new InputParser(new File("clone1_outFile.txt"), null,
-                    new IgTreeViewerFrame(), false);*/
-                    //For IgPhyML
-                    InputParser parser = new InputParser(new File("C:\\Users\\mperez\\LocalDocuments" +
-                    "\\RAW_files_toSendToServer\\IgPhyML\\example_airr.tsv"), new File("C:\\Users\\mperez\\LocalDocuments" +
-                    "\\RAW_files_toSendToServer\\IgPhyML\\example_igphyml-pass.tab"), "1", new IgTreeViewerFrame());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (HeadlessException e) {
-            e.printStackTrace();
-        } catch (FastaFormatException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Instantiates a new ig tree maker.
@@ -200,7 +162,6 @@ public class InputParser {
                 fastaIdToSeq.put(node.getNodeId(), node.getSequence());
             }
         }
-        createXMLFile();
         //not necessary for the release
         //createMatrixTreeFile();
         launchGUI2();
@@ -273,7 +234,6 @@ public class InputParser {
                 fastaIdToSeq.put(node.getNodeId(), node.getSequence());
             }
         }
-        createXMLFile();
         //not necessary for the release
         //createMatrixTreeFile();
         launchGUI2();
@@ -1091,43 +1051,6 @@ public class InputParser {
         return imgtSequence;
     }
 
-    public void setIgTree_xml(String xmlName) {
-        this.igTree_xml = xmlName;
-    }
-
-    @XmlTransient
-    public String getIgTree_xml() {
-        return igTree_xml;
-    }
-
-    /**
-     * Creates the xml file.
-     *
-     * @throws JAXBException the jAXB exception
-     * @throws IOException   Signals that an I/O exception has occurred.
-     * @throws SAXException  the sAX exception
-     */
-    private void createXMLFile() throws JAXBException, IOException, SAXException {
-
-        setIgTree_xml(System.getProperty("user.dir") + fs + "output" + fs + projectName + fs + projectName + ".xml");
-
-        // create JAXB context and instantiate marshaller
-
-        JAXBContext context = JAXBContext.newInstance(InputParser.class); //
-        Marshaller m = context.createMarshaller();
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-        Writer w = null;
-        try {
-            w = new FileWriter(getIgTree_xml());
-            m.marshal(this, w);
-        } finally {
-            try {
-                w.close();
-            } catch (Exception e) {
-            }
-        }
-    }
 
     private void createMatrixTreeFile() throws IOException {
         File matrixFile = new File(System.getProperty("user.dir") + fs + "output" + fs + projectName + fs + projectName + "_matrixTree.tsv");
@@ -1168,7 +1091,7 @@ public class InputParser {
 
     private void launchGUI2() {
         // here we update the IgTreeViewerFrame
-        igTreeViewerFrame.updateIgTreeViewerFrame(igTree_xml);
+        igTreeViewerFrame.updateIgTreeViewerFrame(this);
     }
 
     public String getProjectName() {

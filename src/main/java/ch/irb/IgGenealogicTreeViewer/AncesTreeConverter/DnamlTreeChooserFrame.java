@@ -36,7 +36,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.xml.bind.JAXBException;
 
 import org.xml.sax.SAXException;
 
@@ -190,8 +189,6 @@ public class DnamlTreeChooserFrame extends JFrame implements ActionListener {
             @SuppressWarnings("unused")
             InputParser parser = new InputParser(dnamlFile, imgtFile, igTreeViewerFrame, hasReadsInId);
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JAXBException e) {
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();

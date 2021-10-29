@@ -24,9 +24,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.log4j.Logger;
 
@@ -50,91 +47,90 @@ public class Node extends NodeObject {
     /**
      * The related igs.
      */
-    @XmlTransient
+    
     private ArrayList<Ig> relatedIgs = new ArrayList<Ig>();
 
     /**
      * The parent is set.
      */
-    @XmlTransient
+    
     private boolean parentIsSet = false;
 
     /**
      * The has possible parents.
      */
-    @XmlTransient
+    
     private boolean hasPossibleParents = false;
 
     /**
      * The number of is a possible parent.
      */
-    @XmlTransient
+    
     private int numberOfIsAPossibleParent = 0;
 
     /**
      * The possible parents.
      */
-    @XmlTransient
+    
     private ArrayList<Node> possibleParents = new ArrayList<Node>();
 
     /**
      * The parent.
      */
-    @XmlTransient
+    
     public Node parent;
 
     /**
      * The parent id.
      */
-    @XmlElement(name = "parent")
     public String parentId;
 
     /**
      * The children.
      */
-    @XmlTransient
+    
     public ArrayList<Node> children = new ArrayList<Node>();
 
     /**
      * The mutations from root.
      */
-    @XmlTransient
+    
     private TreeMap<Integer, String> mutationsFromRoot = new TreeMap<Integer, String>();
 
     /**
      * The common mutations for a BP ONLY.
      */
-    @XmlTransient
+    
     private TreeMap<Integer, String> mutationsInCommon = new TreeMap<Integer, String>();
 
     /**
      * The possible reverse.
      */
-    @XmlTransient
+    
     private TreeMap<Integer, String> possibleReverse = new TreeMap<Integer, String>();
 
     /**
      * The reverse mutations from root with a parent.
      */
-    @XmlTransient
+    
     private HashMap<Node, TreeMap<Integer, String>> reverseMutationsFromRootWithAParent = new HashMap<>();
 
     /**
      * The double mutations with a parent.
      */
-    @XmlTransient
+    
     private HashMap<Node, TreeMap<Integer, String>> doubleMutationsWithAParent = new HashMap<>();
 
     /**
      * The reverse number.
      */
-    @XmlTransient
+    
     private int reverseNumber = 0;
 
     /**
      * The double number.
      */
-    @XmlTransient
+    
     private int doubleNumber = 0;
 
     /**
@@ -149,7 +145,7 @@ public class Node extends NodeObject {
      *
      * @return the parent
      */
-    @XmlTransient
+    
     public Node getParent() {
         return parent;
     }
@@ -169,7 +165,7 @@ public class Node extends NodeObject {
      *
      * @return the related igs
      */
-    @XmlTransient
+    
     public ArrayList<Ig> getRelatedIgs() {
         return relatedIgs;
     }
@@ -179,7 +175,7 @@ public class Node extends NodeObject {
      *
      * @return the number of igs
      */
-    @XmlTransient
+    
     public int getNumberOfIgs() {
         return 1;
     }
@@ -233,7 +229,7 @@ public class Node extends NodeObject {
      *
      * @return the children
      */
-    @XmlTransient
+    
     public ArrayList<Node> getChildren() {
         return children;
     }
@@ -243,8 +239,6 @@ public class Node extends NodeObject {
      *
      * @return the children for xml file
      */
-    @XmlElementWrapper(name = "children", required = false)
-    @XmlElement(name = "node", required = true)
     public ArrayList<Node> getChildrenForXmlFile() {
 		if (children.size() == 0) {
 			return null;
@@ -313,7 +307,7 @@ public class Node extends NodeObject {
      *
      * @return the mutations from root
      */
-    @XmlTransient
+    
     public TreeMap<Integer, String> getMutationsFromRoot() {
         return mutationsFromRoot;
     }
@@ -321,7 +315,7 @@ public class Node extends NodeObject {
     /**
      * @return the mutationsInCommon
      */
-    @XmlTransient
+    
     public TreeMap<Integer, String> getMutationsInCommon() {
         return mutationsInCommon;
     }
@@ -603,7 +597,7 @@ public class Node extends NodeObject {
      *
      * @return the possible reverse
      */
-    @XmlTransient
+    
     public TreeMap<Integer, String> getPossibleReverse() {
         return possibleReverse;
     }

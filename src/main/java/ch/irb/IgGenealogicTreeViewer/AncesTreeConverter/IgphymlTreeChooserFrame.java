@@ -25,7 +25,6 @@ import ch.irb.currentDirectory.GetSetCurrentDirectory;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
-import javax.xml.bind.JAXBException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -353,8 +352,6 @@ public class IgphymlTreeChooserFrame extends JFrame implements ActionListener {
             @SuppressWarnings("unused")
             InputParser parser = new InputParser(changeoAirrFile, igphymlFile, cloneId, igTreeViewerFrame);
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JAXBException e) {
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
