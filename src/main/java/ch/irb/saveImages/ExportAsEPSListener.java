@@ -29,6 +29,11 @@ import org.apache.xmlgraphics.java2d.ps.PSDocumentGraphics2D;
 
 import ch.irb.currentDirectory.GetSetCurrentDirectory;
 
+import de.erichseifert.vectorgraphics2d.VectorGraphics2D;
+import de.erichseifert.vectorgraphics2d.eps.EPSProcessor;
+import de.erichseifert.vectorgraphics2d.svg.SVGProcessor;
+import de.erichseifert.vectorgraphics2d.pdf.PDFProcessor;
+import de.erichseifert.vectorgraphics2d.util.PageSize;
 /**
  * @author Mathilde this class takes in argument a JPanelToExport (that has a draw(graphics2D) method) to export it in
  *         EPS format Then the image can be open with Iluustrator.
@@ -48,8 +53,8 @@ public class ExportAsEPSListener implements ActionListener {
         final JFileChooser fileChooser = new JFileChooser() {
             public void approveSelection() {
                 File f = getSelectedFile();
-                if (!f.getAbsolutePath().matches(".*\\.eps")) {
-                    f = new File(f.getAbsolutePath() + ".eps");
+                if (!f.getAbsolutePath().matches(".*\\.(eps|svg|pdf)")) {
+                    f = new File(f.getAbsolutePath() + ".pdf");
                 }
                 if (f.exists() && getDialogType() == SAVE_DIALOG) {
                     int result = JOptionPane.showConfirmDialog(this, "The file exists, overwrite?", "Existing file",
@@ -69,17 +74,16 @@ public class ExportAsEPSListener implements ActionListener {
             }
         };
         fileChooser.setCurrentDirectory(getSetCurrentDir.getCurrentDirectory());
-        fileChooser.setFileFilter(new TSVFilter());
-        fileChooser.setDialogTitle("Save as .eps");
+        fileChooser.setDialogTitle("Save as PDF/SVG/EPS");
         int choix = fileChooser.showSaveDialog(jPanel);
         if (choix != JFileChooser.APPROVE_OPTION) {
             return;
         }
         getSetCurrentDir.setCurrentDirectory(fileChooser.getCurrentDirectory());
         File file = fileChooser.getSelectedFile();
-        if (!file.getAbsolutePath().matches(".*\\.eps")) {
+        if (!file.getAbsolutePath().matches(".*\\.(eps|svg|pdf)")) {
             if (!file.getAbsolutePath().matches("\\.")) {
-                file = new File(file.getAbsolutePath() + ".eps");
+                file = new File(file.getAbsolutePath() + ".pdf");
             }
         }
         try {
@@ -90,20 +94,31 @@ public class ExportAsEPSListener implements ActionListener {
 
     }
 
-    private void generatePSusingJava2D(File outputFile) throws IOException {
-        OutputStream out = new java.io.FileOutputStream(outputFile);
-        out = new java.io.BufferedOutputStream(out);
-        try {
-            // Instantiate the PSDocumentGraphics2D instance
-            PSDocumentGraphics2D g2d = new PSDocumentGraphics2D(false);
-            g2d.setGraphicContext(new org.apache.xmlgraphics.java2d.GraphicContext());
 
-            // Set up the document size
-            g2d.setupDocument(out, jPanel.getWidth(), jPanel.getHeight());
+    private void generatePSusingJava2D(File outputFile) throws IOException {
+        String[] splitted = outputFile.getName().split("\\.");
+        String extension = splitted[splitted.length - 1];
+        OutputStream out = new java.io.BufferedOutputStream(new java.io.FileOutputStream(outputFile));
+        try {
+ 
+            VectorGraphics2D g2d = new VectorGraphics2D();
             jPanel.print(g2d);
 
-            // Cleanup
-            g2d.finish();
+            
+            if (extension.equals("svg")) {
+                (new SVGProcessor()).getDocument(g2d.getCommands(), new PageSize(jPanel.getWidth(), jPanel.getHeight())).writeTo(out);
+            } 
+
+            if (extension.equals("pdf")) {
+                (new PDFProcessor()).getDocument(g2d.getCommands(), new PageSize(jPanel.getWidth(), jPanel.getHeight())).writeTo(out);
+            } 
+            
+            if (extension.equals("eps")) {
+                (new EPSProcessor()).getDocument(g2d.getCommands(), new PageSize(jPanel.getWidth(), jPanel.getHeight())).writeTo(out);
+            }
+
+
+   
         } finally {
             IOUtils.closeQuietly(out);
         }

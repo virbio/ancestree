@@ -69,7 +69,7 @@ public class ClipDataFrame extends JFrame {
     private ArrayList<String> igInOrderToDisplay = new ArrayList<String>();
     private JMenu file = new JMenu("Export");
     private JMenu showMenu = new JMenu("Show");
-    private JMenuItem exportItemEPS = new JMenuItem("Export image as .EPS");
+    private JMenuItem exportItemEPS = new JMenuItem("Export image as PDF/SVG/EPS");
     private JMenuItem exportItemPNG = new JMenuItem("Export image as .PNG");
     private JFrame frame = this;
     private JScrollPane jScrollPane = new JScrollPane();

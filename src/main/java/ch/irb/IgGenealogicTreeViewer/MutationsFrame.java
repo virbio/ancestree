@@ -114,7 +114,7 @@ public class MutationsFrame extends JFrame implements ActionListener {
     private Color buttonColor = new Color(255, 252, 186);
     private Color greyColor = new Color(239, 239, 239);
     private JMenu exportMenu = new JMenu("Export");
-    private JMenuItem exportItemEPS = new JMenuItem("Export image as .EPS");
+    private JMenuItem exportItemEPS = new JMenuItem("Export image as PDF/SVG/EPS");
     private JMenuItem exportItemPNG = new JMenuItem("Export image as .PNG");
     private JMenu showMenu = new JMenu("Show");
     private JRadioButton showDnaItem = new JRadioButton("Show DNA sequence");

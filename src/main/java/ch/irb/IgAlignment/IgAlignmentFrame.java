@@ -73,7 +73,7 @@ public class IgAlignmentFrame extends JFrame {
     private JMenu showMenu = new JMenu("Show");
     private JMenu zoomMenu = new JMenu("Zoom");
     private JMenu modeMenu = new JMenu("Mode");
-    private JMenuItem exportItemEPS = new JMenuItem("Export image as .EPS");
+    private JMenuItem exportItemEPS = new JMenuItem("Export image as PDF/SVG/EPS");
     private JMenuItem exportItem_shorted = new JMenuItem("Shrink image");
     private JMenuItem exportItem_withoutLetter = new JMenuItem("Mutations Map");
     private JMenuItem exportItemPNG = new JMenuItem("Export image as .PNG");
@@ -368,7 +368,7 @@ public class IgAlignmentFrame extends JFrame {
             getContentPane().add(jScrollPane);
             // the menu
             JMenu exportMenu = new JMenu("Export");
-            JMenuItem exportItemEPS = new JMenuItem("Export image as .EPS");
+            JMenuItem exportItemEPS = new JMenuItem("Export image as PDF/SVG/EPS");
             JMenuItem exportItemPNG = new JMenuItem("Export image as .PNG");
             ExportAsEPSListener exportAsEPSListener = new ExportAsEPSListener(exportAlignmentPanel, getSetCurrentDir);
             exportItemEPS.addActionListener(exportAsEPSListener);

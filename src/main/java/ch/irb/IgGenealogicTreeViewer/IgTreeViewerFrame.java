@@ -93,8 +93,8 @@ public class IgTreeViewerFrame extends JFrame implements WindowListener {
     private JCheckBoxMenuItem fadeButton = new JCheckBoxMenuItem("Fading ON");
     private JMenuItem saveItem = new JMenuItem("Export image as .PNG");
     private JMenuItem saveItemWithLegend = new JMenuItem("Export image (with legend) as .PNG");
-    private JMenuItem saveItemEPS = new JMenuItem("Export image as .EPS");
-    private JMenuItem saveLegendEPS = new JMenuItem("Export legend as .EPS");
+    private JMenuItem saveItemEPS = new JMenuItem("Export image as PDF/SVG/EPS");
+    private JMenuItem saveLegendEPS = new JMenuItem("Export legend as PDF/SVG/EPS");
     private SaveTreeListener saveTreeListener;
     private AlignmentListener alignmentListener;
     private SaveImageAsPngListener saveItemListenerPanel;
