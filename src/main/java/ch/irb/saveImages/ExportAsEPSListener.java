@@ -23,9 +23,7 @@ import java.io.OutputStream;
 
 import javax.swing.*;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.apache.xmlgraphics.java2d.ps.PSDocumentGraphics2D;
 
 import ch.irb.currentDirectory.GetSetCurrentDirectory;
 
@@ -120,7 +118,7 @@ public class ExportAsEPSListener implements ActionListener {
 
    
         } finally {
-            IOUtils.closeQuietly(out);
+            out.close();
         }
     }
 
