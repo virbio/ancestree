@@ -21,13 +21,14 @@ import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Mathilde This class take the DNA sequence and translates it into a protein sequence
  */
 public class Translator {
-    static Logger logger = Logger.getLogger(Translator.class);
+    static Logger logger = LogManager.getLogger(Translator.class);
     private String dnaSequence;
     private String protSequence = "";
     private boolean isDNA;

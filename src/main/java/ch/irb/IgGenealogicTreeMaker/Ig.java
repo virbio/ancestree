@@ -20,7 +20,8 @@ package ch.irb.IgGenealogicTreeMaker;
 
 import java.util.Scanner;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -28,7 +29,7 @@ import org.apache.log4j.Logger;
  *         This class will store the information related to each IG: its ID, its cell, its immunization info and its sequence
  */
 public class Ig {
-    static Logger logger = Logger.getLogger(Ig.class);
+    static Logger logger = LogManager.getLogger(Ig.class);
 
     private String fastaId;
     private String originalSequence;

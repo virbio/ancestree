@@ -43,7 +43,8 @@ import java.util.TreeMap;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import ch.irb.currentDirectory.GetSetCurrentDirectory;
 import ch.irb.nodes.NodeGraph;
@@ -58,7 +59,7 @@ import ch.irb.nodes.NodeGraph;
 @SuppressWarnings("serial")
 public class IgTreePanel extends JPanel {
     private IgTreePanel igTreePanel = this;
-    static Logger logger = Logger.getLogger(IgTreePanel.class);
+    static Logger logger = LogManager.getLogger(IgTreePanel.class);
     static PValueCodeColor pValueCodeColor = new PValueCodeColor();
     static Color yellowColor = new Color(255, 255, 102);
     static Color pinkColor = new Color(255, 204, 204);

@@ -49,7 +49,8 @@ import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import ch.irb.Layout.SpringUtilities;
 import ch.irb.currentDirectory.GetSetCurrentDirectory;
@@ -81,7 +82,7 @@ import ch.irb.translation.Translator;
 
 @SuppressWarnings("serial")
 public class MutationsFrame extends JFrame implements ActionListener {
-    static Logger logger = Logger.getLogger(MutationsFrame.class);
+    static Logger logger = LogManager.getLogger(MutationsFrame.class);
     static String OS = System.getProperty("os.name").toLowerCase();
     private JPanel jPanel = new JPanel(new SpringLayout());
     private JScrollPane jScrollPane = new JScrollPane();

@@ -25,7 +25,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import ch.irb.IgGenealogicTreeMaker.Ig;
 
@@ -42,7 +43,7 @@ public class Node extends NodeObject {
     /**
 	 * The logger.
      */
-    static Logger logger = Logger.getLogger(Node.class);
+    static Logger logger = LogManager.getLogger(Node.class);
 
     /**
      * The related igs.

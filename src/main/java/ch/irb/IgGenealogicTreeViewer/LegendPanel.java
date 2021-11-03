@@ -41,7 +41,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 import javax.swing.TransferHandler;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Mathilde This class is the legend panel, it will display the color
@@ -51,7 +52,7 @@ import org.apache.log4j.Logger;
  */
 @SuppressWarnings("serial")
 public class LegendPanel extends JPanel {
-    static Logger logger = Logger.getLogger(LegendPanel.class);
+    static Logger logger = LogManager.getLogger(LegendPanel.class);
     private ColorByYear colorByYear;
     private IgTreePanel igTreePanel;
     private boolean isHidden = false;

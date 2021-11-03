@@ -28,7 +28,8 @@ import ch.irb.ManageFastaFiles.FastaFormatException;
 import ch.irb.IgGenealogicTreeViewer.airr.ProcessAIRRdata;
 import ch.irb.imgt.ProcessIMGTData;
 import ch.irb.nodes.Node;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
@@ -40,7 +41,7 @@ import java.util.regex.Pattern;
 
 public class InputParser {
 
-    static Logger logger = Logger.getLogger(InputParser.class);
+    static Logger logger = LogManager.getLogger(InputParser.class);
     static String fs = System.getProperty("file.separator");
     static String ls = System.getProperty("line.separator");
 

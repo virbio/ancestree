@@ -44,7 +44,8 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.TransferHandler;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import ch.irb.Layout.SpringUtilities;
 import ch.irb.nodes.NodeGraph;
@@ -56,7 +57,7 @@ import ch.irb.nodes.NodeGraph;
  */
 @SuppressWarnings("serial")
 public class NodeFrame extends JFrame {
-    static Logger logger = Logger.getLogger(NodeFrame.class);
+    static Logger logger = LogManager.getLogger(NodeFrame.class);
     private JFrame frame = this;
     private IgTreePanel igTreePanel;
     private JPanel jPanel = new JPanel(new SpringLayout());

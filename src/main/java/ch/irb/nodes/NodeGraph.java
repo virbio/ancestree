@@ -22,7 +22,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Mathilde This class is a NodeGraph object specific to the GUI. It will share some information with the Node
@@ -33,7 +34,7 @@ import org.apache.log4j.Logger;
  *         displayed in the paintComponent() method.
  */
 public class NodeGraph extends NodeObject {
-    static Logger logger = Logger.getLogger(NodeGraph.class);
+    static Logger logger = LogManager.getLogger(NodeGraph.class);
     private ArrayList<NodeGraph> children = new ArrayList<NodeGraph>();
     private NodeGraph parent;
     private String shape = "circle";

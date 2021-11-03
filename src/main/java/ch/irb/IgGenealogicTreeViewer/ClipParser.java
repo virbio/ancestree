@@ -24,10 +24,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 public class ClipParser {
-    static Logger logger = Logger.getLogger(ClipParser.class);
+    static Logger logger = LogManager.getLogger(ClipParser.class);
     @SuppressWarnings("unused")
     private File file;
     private HashMap<String, String[]> igToPvalues = new HashMap<String, String[]>();

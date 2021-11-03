@@ -24,10 +24,11 @@ import java.io.IOException;
 import java.util.TreeMap;
 
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 public class ProcessKabatNumbering {
-    static Logger logger = Logger.getLogger(ProcessKabatNumbering.class);
+    static Logger logger = LogManager.getLogger(ProcessKabatNumbering.class);
     private String aaSequence;
     private TreeMap<Integer, String> fromPositionToKabatnumbering = new TreeMap<>();
     private TreeMap<Integer, String> fromPositionToAA = new TreeMap<>();

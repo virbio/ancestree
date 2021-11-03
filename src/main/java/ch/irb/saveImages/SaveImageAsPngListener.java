@@ -35,7 +35,8 @@ import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageOutputStream;
 import javax.swing.*;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import ch.irb.currentDirectory.GetSetCurrentDirectory;
 
@@ -43,7 +44,7 @@ import ch.irb.currentDirectory.GetSetCurrentDirectory;
  * This class is used to save the panel (with or without the LegendPanel) into PNG images
  */
 public class SaveImageAsPngListener implements ActionListener {
-    static Logger logger = Logger.getLogger(SaveImageAsPngListener.class);
+    static Logger logger = LogManager.getLogger(SaveImageAsPngListener.class);
     private Container container;
     private GetSetCurrentDirectory getSetCurrentDir;
 

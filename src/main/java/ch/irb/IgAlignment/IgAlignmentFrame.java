@@ -47,7 +47,8 @@ import javax.swing.JScrollPane;
 import javax.swing.MenuSelectionManager;
 import javax.swing.plaf.basic.BasicCheckBoxMenuItemUI;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import ch.irb.IgGenealogicTreeMaker.Ig;
 import ch.irb.IgGenealogicTreeViewer.IgTreeReader;
@@ -62,7 +63,7 @@ import ch.irb.saveImages.TSVFilter;
 @SuppressWarnings("serial")
 public class IgAlignmentFrame extends JFrame {
     private JFrame thisFrame = this;
-    static Logger logger = Logger.getLogger(IgAlignmentFrame.class);
+    static Logger logger = LogManager.getLogger(IgAlignmentFrame.class);
     private ArrayList<NodeGraph> allNodeGraphs = new ArrayList<NodeGraph>();
     private ArrayList<NodeGraph> nodeGraphsToShow = new ArrayList<NodeGraph>();
     private JScrollPane jScrollPane = new JScrollPane();

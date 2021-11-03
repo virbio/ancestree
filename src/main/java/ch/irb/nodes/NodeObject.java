@@ -16,7 +16,8 @@
 package ch.irb.nodes;
 
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import ch.irb.translation.Translator;
 
@@ -25,7 +26,7 @@ import ch.irb.translation.Translator;
  *         used in the GUI
  */
 public class NodeObject {
-    static Logger logger = Logger.getLogger(NodeObject.class);
+    static Logger logger = LogManager.getLogger(NodeObject.class);
 
     protected boolean isRoot = false;
     protected boolean isDNA = true;

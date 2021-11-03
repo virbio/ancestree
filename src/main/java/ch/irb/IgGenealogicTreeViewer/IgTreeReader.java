@@ -26,7 +26,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import ch.irb.IgGenealogicTreeViewer.AncesTreeConverter.InputParser;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import ch.irb.IgGenealogicTreeViewer.AncesTreeConverter.InputParser;
 import ch.irb.nodes.Node;
@@ -43,7 +44,7 @@ import static java.lang.Integer.parseInt;
  * GraphNode (the mutations with its parent etc..)
  */
 public class IgTreeReader {
-    static Logger logger = Logger.getLogger(IgTreeReader.class);
+    static Logger logger = LogManager.getLogger(IgTreeReader.class);
     private String xmlFilePath;
     private String projectName;
     @SuppressWarnings("unused")

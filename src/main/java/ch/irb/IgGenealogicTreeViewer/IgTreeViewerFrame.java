@@ -50,7 +50,8 @@ import javax.swing.JScrollPane;
 import javax.swing.SpringLayout;
 
 import ch.irb.IgGenealogicTreeViewer.AncesTreeConverter.IgphymlTreeChooserFrame;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import ch.irb.IgAlignment.IgAlignmentFrame;
 import ch.irb.IgGenealogicTreeViewer.AncesTreeConverter.InputParser;
@@ -71,7 +72,7 @@ import ch.irb.saveImages.SaveImageAsPngListener;
 
 @SuppressWarnings("serial")
 public class IgTreeViewerFrame extends JFrame implements WindowListener {
-    static Logger logger = Logger.getLogger(IgTreeViewerFrame.class);
+    static Logger logger = LogManager.getLogger(IgTreeViewerFrame.class);
     private IgTreeViewerFrame igTreeViewerFrame = this;
     private GetSetCurrentDirectory getSetCurrentDir = new GetSetCurrentDirectory();
     private IgTreeReader igTreeReader = null;

@@ -22,12 +22,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeMap;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import ch.irb.nodes.Node;
 
 public class NodesSorting {
-    static Logger logger = Logger.getLogger(NodesSorting.class);
+    static Logger logger = LogManager.getLogger(NodesSorting.class);
     private ArrayList<Node> allNodes = new ArrayList<>();
     private ArrayList<Node> isNodeACluster = new ArrayList<>();
     private ArrayList<Node> orderedNodes = new ArrayList<>();

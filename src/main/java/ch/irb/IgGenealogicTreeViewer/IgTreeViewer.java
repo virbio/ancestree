@@ -18,7 +18,8 @@
 
 package ch.irb.IgGenealogicTreeViewer;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -26,7 +27,7 @@ import java.lang.reflect.Method;
 public class IgTreeViewer {
 
     public static String xmlFilePath = null;
-    static Logger logger = Logger.getLogger(IgTreeViewer.class);
+    static Logger logger = LogManager.getLogger(IgTreeViewer.class);
 
     /**
      * @param args

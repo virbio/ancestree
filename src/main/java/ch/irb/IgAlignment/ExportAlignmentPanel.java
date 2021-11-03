@@ -42,7 +42,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import ch.irb.IgGenealogicTreeViewer.SetImgtInfo;
 import ch.irb.kabat.ProcessKabatNumbering;
@@ -51,7 +52,7 @@ import ch.irb.translation.AminoAcidProperties;
 
 @SuppressWarnings("serial")
 public class ExportAlignmentPanel extends JPanel {
-	static Logger logger = Logger.getLogger(AlignmentPanel.class);
+	static Logger logger = LogManager.getLogger(AlignmentPanel.class);
     static AminoAcidProperties aminoAcidProperties = new AminoAcidProperties();
     static Color redColor = new Color(255, 159, 159);
     static Color pinkColor = new Color(255, 191, 191);

@@ -23,7 +23,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager; 
+import org.apache.logging.log4j.Logger;
 
 import ch.irb.nodes.NodeGraph;
 
@@ -33,7 +34,7 @@ import ch.irb.nodes.NodeGraph;
  *         tree in order it is clickable.
  */
 public class MutationsGraph {
-    static Logger logger = Logger.getLogger(MutationsGraph.class);
+    static Logger logger = LogManager.getLogger(MutationsGraph.class);
     private Rectangle2D rectangle2d = new Rectangle2D.Float();
     private Rectangle2D rectangleToWrite = new Rectangle2D.Float();
     private ArrayList<Point2D> linePoints = new ArrayList<Point2D>();
