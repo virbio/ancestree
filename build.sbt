@@ -9,7 +9,7 @@ assembly / mainClass := (Compile / mainClass).value
 ThisBuild / fork := true
 
 libraryDependencies ++= List(
-	"org.apache.logging.log4j" % "log4j-api" % "2.14.1",
+	"org.apache.logging.log4j" % "log4j-api" % "2.15.0",
 	"de.erichseifert.vectorgraphics2d" % "VectorGraphics2D" % "0.13"
 )
 
