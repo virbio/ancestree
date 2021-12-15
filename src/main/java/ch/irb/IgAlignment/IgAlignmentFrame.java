@@ -47,8 +47,6 @@ import javax.swing.JScrollPane;
 import javax.swing.MenuSelectionManager;
 import javax.swing.plaf.basic.BasicCheckBoxMenuItemUI;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
 
 import ch.irb.IgGenealogicTreeMaker.Ig;
 import ch.irb.IgGenealogicTreeViewer.IgTreeReader;
@@ -63,7 +61,6 @@ import ch.irb.saveImages.TSVFilter;
 @SuppressWarnings("serial")
 public class IgAlignmentFrame extends JFrame {
     private JFrame thisFrame = this;
-    static Logger logger = LogManager.getLogger(IgAlignmentFrame.class);
     private ArrayList<NodeGraph> allNodeGraphs = new ArrayList<NodeGraph>();
     private ArrayList<NodeGraph> nodeGraphsToShow = new ArrayList<NodeGraph>();
     private JScrollPane jScrollPane = new JScrollPane();
@@ -512,7 +509,7 @@ public class IgAlignmentFrame extends JFrame {
             }
             out.write(ls);
             for (String kab : kabats) {
-                // logger.debug("Add kabat "+kabat);
+                // System.err.println("Add kabat "+kabat);
                 out.write("\t" + kab);
             }
             out.write(ls);
@@ -534,7 +531,7 @@ public class IgAlignmentFrame extends JFrame {
                     String aa = String.valueOf(a);
                     String text = aa;
                     String conservedAA = posToConservedAA.get(pos);
-                    // logger.debug("At kabat "+kabat+" the conserved AA is
+                    // System.err.println("At kabat "+kabat+" the conserved AA is
                     // "+conservedAA+" and the AA is "+aa);
                     if (conservedAA.equals(aa)) { // same AA than the conserved
                         // one

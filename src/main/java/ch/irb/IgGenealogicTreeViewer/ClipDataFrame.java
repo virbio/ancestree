@@ -45,8 +45,8 @@ import javax.swing.JScrollPane;
 import javax.swing.MenuSelectionManager;
 import javax.swing.plaf.basic.BasicCheckBoxMenuItemUI;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
+
+
 
 import ch.irb.IgAlignment.MenuScroller;
 import ch.irb.currentDirectory.GetSetCurrentDirectory;
@@ -55,7 +55,7 @@ import ch.irb.saveImages.SaveImageAsPngListener;
 
 @SuppressWarnings("serial")
 public class ClipDataFrame extends JFrame {
-    static Logger logger = LogManager.getLogger(MutationsFrame.class);
+   
     private int firstColumn_width = 130;
     static PValueCodeColor pValueCodeColor = new PValueCodeColor();
     static Color intenseRed = new Color(255, 0, 0);

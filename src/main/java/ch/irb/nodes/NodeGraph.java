@@ -22,8 +22,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
+
+
 
 /**
  * @author Mathilde This class is a NodeGraph object specific to the GUI. It will share some information with the Node
@@ -34,7 +34,7 @@ import org.apache.logging.log4j.Logger;
  *         displayed in the paintComponent() method.
  */
 public class NodeGraph extends NodeObject {
-    static Logger logger = LogManager.getLogger(NodeGraph.class);
+   
     private ArrayList<NodeGraph> children = new ArrayList<NodeGraph>();
     private NodeGraph parent;
     private String shape = "circle";
@@ -213,7 +213,7 @@ public class NodeGraph extends NodeObject {
 
     // This position represents the position of a LAST node among all the other last nodes
     public void setXPosition(int xPosition) {
-        // //logger.debug("For node " + getNodeId() + " we have the position " + xPosition);
+        // //System.err.println("For node " + getNodeId() + " we have the position " + xPosition);
         this.xPosition = xPosition;
     }
 
@@ -232,14 +232,14 @@ public class NodeGraph extends NodeObject {
         if (!parent.isRoot) {
             int numberChildrenWithThisParent = parent.getParent().getChildren().size();
             if (numberChildrenWithThisParent == 1) {
-                ////logger.debug("This node " + getNodeId() + " has to be in the middle");
+                ////System.err.println("This node " + getNodeId() + " has to be in the middle");
                 hasToBeInTheMiddle = true;
             } else {
                 parent.setHasToBeInTheMiddle();
             }
         } else {
             this.hasToBeInTheMiddle = true;
-            //logger.debug("This node " + getNodeId() + " has to be in the middle");
+            //System.err.println("This node " + getNodeId() + " has to be in the middle");
         }
     }
 
@@ -288,7 +288,7 @@ public class NodeGraph extends NodeObject {
      * @param widthOfNodeShape
      */
     public void processXCoordinates(float lastNodesNumber, float totalWidth, float widthOfNodeShape) {
-        // //logger.debug("Last nodes number is " + lastNodesNumber + ", and total width " + totalWidth);
+        // //System.err.println("Last nodes number is " + lastNodesNumber + ", and total width " + totalWidth);
         // First way to get the x coordinates, if this node belongs to the last nodes at the bottom of the tree
         if (isALastNode()) {
             float x = ((float) getXPosition() / (lastNodesNumber + 1)) * totalWidth - (widthOfNodeShape / 2 + 5);
@@ -308,14 +308,14 @@ public class NodeGraph extends NodeObject {
             float childXMini = totalWidth;
             for (int i = 0; i < children.size(); i++) {
                 NodeGraph child = children.get(i);
-                // //logger.debug("Processing child "+child.getNodeId()+" with x position "+child.getXPosition());
+                // //System.err.println("Processing child "+child.getNodeId()+" with x position "+child.getXPosition());
                 if (child.getXCoord() > childXMax) { // position of the 'last' child of this node
                     childXMax = child.getXCoord();
-                    // //logger.debug("CHILD x max "+childXMax);
+                    // //System.err.println("CHILD x max "+childXMax);
                 }
                 if (child.getXCoord() < childXMini) { // position of the first child of the node
                     childXMini = child.getXCoord();
-                    // //logger.debug("CHILD x mini "+childXMini);
+                    // //System.err.println("CHILD x mini "+childXMini);
                 }
             }
             float x = ((childXMax - childXMini) / 2) + childXMini;
@@ -328,7 +328,7 @@ public class NodeGraph extends NodeObject {
                     node.setCoordinatesProcessed(true);
                 }
             }
-            // //logger.debug("For Node " + nodeId + " which is in the tree, we have x coordinate: " + x);
+            // //System.err.println("For Node " + nodeId + " which is in the tree, we have x coordinate: " + x);
         }
     }
 
@@ -346,8 +346,8 @@ public class NodeGraph extends NodeObject {
             height *= 1.8;
         }
         setHeight(height);
-        // //logger.debug("For node "+getNodeId()+" height is "+getHeight());
-        //logger.debug("For node GRAPH "+getNodeId());//+" we have parent "+getParent().getNodeId());
+        // //System.err.println("For node "+getNodeId()+" height is "+getHeight());
+        //System.err.println("For node GRAPH "+getNodeId());//+" we have parent "+getParent().getNodeId());
         float y = 40f;
         if (yDistanceWithParent == 0) // it is the UCA
         {
@@ -380,7 +380,7 @@ public class NodeGraph extends NodeObject {
                     yForDuplicated += (duplicatedNodes.get(i - 1).getHeight()) + 2;
                 }
                 node.setYCoord(yForDuplicated);
-                // //logger.debug("For node " + node.getNodeId() + " we set y to " + yForDuplicated);
+                // //System.err.println("For node " + node.getNodeId() + " we set y to " + yForDuplicated);
             }
         }
     }
@@ -519,7 +519,7 @@ public class NodeGraph extends NodeObject {
         String[] splitted = nodeIds.split(", ");
         for (String nodeId : splitted) {
             if (!nodeId.equals(getNodeId()) && !nodeId.equals(rootNodeId)) {
-                ////logger.debug("Add dup " + nodeId);
+                ////System.err.println("Add dup " + nodeId);
                 NodeGraph node = new NodeGraph();
                 node.setDNA(isDNA());
                 node.setNodeId(nodeId);
@@ -622,25 +622,25 @@ public class NodeGraph extends NodeObject {
     }
 
     public void printInfoAboutTheNode() {
-        //logger.debug("Node Id: " + nodeId + " is root " + isRoot + " sequence " + sequence);
-        //logger.debug("Protein sequence: " + proteinSequence);
-        //logger.debug("His level is " + level);
+        //System.err.println("Node Id: " + nodeId + " is root " + isRoot + " sequence " + sequence);
+        //System.err.println("Protein sequence: " + proteinSequence);
+        //System.err.println("His level is " + level);
         if (children.size() > 0) {
-            //logger.debug("It has children: ");
+            //System.err.println("It has children: ");
             for (int i = 0; i < children.size(); i++) {
-                //logger.debug("----> " + children.get(i).getNodeId());
+                //System.err.println("----> " + children.get(i).getNodeId());
             }
         } else {
-            //logger.debug("It has no children!");
+            //System.err.println("It has no children!");
         }
-        //logger.debug("Number of nucleotidic mutations from his parent is: " + numberOfNucMutationsWithParent);
-        //logger.debug("Number of AA mutations from his parent is: " + numberOfAAMutationsWithParent);
+        //System.err.println("Number of nucleotidic mutations from his parent is: " + numberOfNucMutationsWithParent);
+        //System.err.println("Number of AA mutations from his parent is: " + numberOfAAMutationsWithParent);
         if (reverseInformation != null) {
-            //logger.debug(reverseInformation);
+            //System.err.println(reverseInformation);
         }
         if (doubleMutationInformation != null) {
-            //logger.debug(doubleMutationInformation);
+            //System.err.println(doubleMutationInformation);
         }
-        //logger.debug("\n\n");
+        //System.err.println("\n\n");
     }
 }

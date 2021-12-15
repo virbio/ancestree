@@ -20,8 +20,6 @@ package ch.irb.IgGenealogicTreeMaker;
 
 import java.util.Scanner;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -29,7 +27,6 @@ import org.apache.logging.log4j.Logger;
  *         This class will store the information related to each IG: its ID, its cell, its immunization info and its sequence
  */
 public class Ig {
-    static Logger logger = LogManager.getLogger(Ig.class);
 
     private String fastaId;
     private String originalSequence;
@@ -58,11 +55,11 @@ public class Ig {
                 @SuppressWarnings("resource")
                 Scanner s = new Scanner(input);
                 if (input.matches("B")) {// The Ig was isolated in a B cell
-                    logger.debug("Get information B cell");
+                    System.err.println("Get information B cell");
                     setCellInfo(input);
                 } else if (input.matches("PC")) { // The Ig was isolated in a plasma
                     // cell
-                    logger.debug("Get information plasma cell");
+                    System.err.println("Get information plasma cell");
                     cellInfo = "PC";
                     setCellInfo(input);
                 } else if (input.matches("post(\\d+)")) { // Year when Ig was
@@ -71,7 +68,7 @@ public class Ig {
                     s.useDelimiter("post");
                     if (s.hasNextInt()) {
                         postImmunizationYear = String.valueOf(s.nextInt());
-                        logger.debug("Get information post immunization year "
+                        System.err.println("Get information post immunization year "
                                 + postImmunizationYear);
                     }
                 } else if (input.matches("d(\\d+)")) { // days after
@@ -79,14 +76,14 @@ public class Ig {
                     s.useDelimiter("d");
                     if (s.hasNextInt()) {
                         daysAfterImmunization = String.valueOf(s.nextInt());
-                        logger.debug("Get information days after immunization "
+                        System.err.println("Get information days after immunization "
                                 + daysAfterImmunization);
                     }
                 } else if (input.matches("pre(\\d+)")) { // year before immunization
                     s.useDelimiter("pre");
                     if (s.hasNextInt()) {
                         preImmunizationYear = String.valueOf(s.nextInt());
-                        logger.debug("Get information pre immunization year "
+                        System.err.println("Get information pre immunization year "
                                 + preImmunizationYear);
                     }
                 } else { //we have the geneBankId

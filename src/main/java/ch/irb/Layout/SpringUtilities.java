@@ -37,8 +37,8 @@ import java.awt.Container;
 import javax.swing.Spring;
 import javax.swing.SpringLayout;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
+
+
 
 /**
  * A 1.4 file that provides utility methods for
@@ -47,7 +47,7 @@ import org.apache.logging.log4j.Logger;
  * SpringBox and SpringCompactGrid.
  */
 public class SpringUtilities {
-    static Logger logger = LogManager.getLogger(SpringUtilities.class);
+   
 
     /**
      * A debugging utility that prints to stdout the component's

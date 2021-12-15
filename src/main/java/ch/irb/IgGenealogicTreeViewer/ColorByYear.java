@@ -28,8 +28,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
+
+
 
 /**
  * @author Mathilde
@@ -39,7 +39,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ColorByYear {
 
-    static Logger logger = LogManager.getLogger(ColorByYear.class);
+   
     private int[] years;
     private TreeMap<Integer, Color> yearToColor = new TreeMap<Integer, Color>();
     final ArrayList<Color> colors = new ArrayList<Color>();

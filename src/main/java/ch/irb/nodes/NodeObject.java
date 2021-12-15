@@ -16,8 +16,8 @@
 package ch.irb.nodes;
 
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
+
+
 
 import ch.irb.translation.Translator;
 
@@ -26,7 +26,7 @@ import ch.irb.translation.Translator;
  *         used in the GUI
  */
 public class NodeObject {
-    static Logger logger = LogManager.getLogger(NodeObject.class);
+   
 
     protected boolean isRoot = false;
     protected boolean isDNA = true;
@@ -110,7 +110,7 @@ public class NodeObject {
         //System.out.println("Protein sequence for " + nodeId + " is: " + proteinSequence);
         Translator translator = new Translator(sequence, isDNA);
         proteinSequence = translator.getProteinSequence();
-        // logger.debug("Protein sequence for " + nodeId + " is: " + proteinSequence);
+        // System.err.println("Protein sequence for " + nodeId + " is: " + proteinSequence);
     }
 
     public int getLevel() {
@@ -446,7 +446,7 @@ public class NodeObject {
     public int compareTwoProteinSequences(String protSequence1, String protSequence2) {
         int numberOfMutations = 0;
         if (protSequence1.length() != protSequence2.length()) {
-            logger.error("!!!!!!!!!!!! BE CAREFUL, these 2 protein sequences dont have the same lengt!!");
+            System.err.println("!!!!!!!!!!!! BE CAREFUL, these 2 protein sequences dont have the same lengt!!");
             return 0;
         }
         for (int i = 0; i < protSequence1.length(); i++) {

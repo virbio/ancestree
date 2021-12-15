@@ -18,11 +18,8 @@
 
 package ch.irb.translation;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
 
 public class Codon {
-    static Logger logger = LogManager.getLogger(Codon.class);
     private String codon = null;
     private String sequence;
     private String parentSequence;

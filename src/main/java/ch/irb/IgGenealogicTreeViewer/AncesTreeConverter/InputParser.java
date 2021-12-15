@@ -28,8 +28,8 @@ import ch.irb.ManageFastaFiles.FastaFormatException;
 import ch.irb.IgGenealogicTreeViewer.airr.ProcessAIRRdata;
 import ch.irb.imgt.ProcessIMGTData;
 import ch.irb.nodes.Node;
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
+
+
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 
 public class InputParser {
 
-    static Logger logger = LogManager.getLogger(InputParser.class);
+   
     static String fs = System.getProperty("file.separator");
     static String ls = System.getProperty("line.separator");
 
@@ -101,7 +101,7 @@ public class InputParser {
         this.igTreeViewerFrame = igTreeViewerFrame;
         this.dnamlOutputFile = dnamlOutputFile;
         this.hasReadsInId = hasReadsInId;
-        // //logger.debug("Parse file " + dnamlOutputFile.getName());
+        // //System.err.println("Parse file " + dnamlOutputFile.getName());
         // We create a project by taking the name of the dnaml output file
         projectName = dnamlOutputFile.getName().replaceAll("\\..*", "");
         // create the directory if it doesnt exist
@@ -178,8 +178,8 @@ public class InputParser {
         this.igPhyMLfile = igPhyMLfile;
         igPhyMLfastafile = new File(igPhyMLfile.getParent() + System.getProperty("file.separator") + igPhyMLfile.getName()
                 .replace(".tab", "_hlp_asr.fasta"));
-        //logger.debug("CLONE ID: "+cloneId);
-        // //logger.debug("Parse file " + dnamlOutputFile.getName());
+        //System.err.println("CLONE ID: "+cloneId);
+        // //System.err.println("Parse file " + dnamlOutputFile.getName());
         // We create a project by taking the name of the airr file + the cloneId
         projectName = igPhyMLfile.getName().replace("_igphyml-pass.tab", "") + "_cloneId" + cloneId;
         // create the directory if it doesnt exist
@@ -253,7 +253,7 @@ public class InputParser {
         BufferedReader fileReader = new BufferedReader(new FileReader(dnamlOutputFile.getPath()));
         String line;
         while ((line = fileReader.readLine()) != null) {
-            // //logger.debug(line);
+            // //System.err.println(line);
             if (line.contains("(although rooted by outgroup)")) {
                 isARootedTree = true;
             }
@@ -311,12 +311,12 @@ public class InputParser {
     private void getNodeNames(String newickTree) {
         //First we store the Ig that will be in the tree, not all of them because of the "--collapse" option!!!
         String newicktree = newickTree.replaceAll("\\\"", "");
-        //logger.debug("TREE is: " + newicktree);
+        //System.err.println("TREE is: " + newicktree);
         BinaryTree<String> binaryTree = BinaryTree.parseNewick(newicktree);
-        //logger.debug(binaryTree.toString());
-        //logger.debug("///////////");
+        //System.err.println(binaryTree.toString());
+        //System.err.println("///////////");
         String stringTree = binaryTree.toTreeRelationship();
-        //logger.debug(stringTree);
+        //System.err.println(stringTree);
         Scanner scanner = new Scanner(stringTree);
         scanner.useDelimiter("\\n");
         String firstbp = null;
@@ -336,9 +336,9 @@ public class InputParser {
                 nodeNames.add(cells[1]);
             }
         }
-        //logger.debug("First bp is " + firstbp);
-        //logger.debug("UCA is " + uca);
-        //logger.debug("\nNodes in the tree: " + nodeNames + "\n");
+        //System.err.println("First bp is " + firstbp);
+        //System.err.println("UCA is " + uca);
+        //System.err.println("\nNodes in the tree: " + nodeNames + "\n");
     }
 
     /*
@@ -399,7 +399,7 @@ public class InputParser {
                 in++;
             }
             idToSequence.put(id, seq);
-            //logger.debug("STORE SEQ FOR "+id+" SEQ "+seq);
+            //System.err.println("STORE SEQ FOR "+id+" SEQ "+seq);
             if (referenceSeq == null) {
                 referenceSeq = seq;
             }
@@ -428,11 +428,11 @@ public class InputParser {
             }
         }
 
-        ////logger.debug("************************");
+        ////System.err.println("************************");
         // Store the ids per sequence
         for (String id : idToSequence.keySet()) {
             String seq = idToSequence.get(id);
-            //logger.debug(id+": "+seq);
+            //System.err.println(id+": "+seq);
             ArrayList<String> ids = new ArrayList<>();
             if (sequenceToIds.containsKey(seq)) {
                 ids = sequenceToIds.get(seq);
@@ -440,7 +440,7 @@ public class InputParser {
             ids.add(id);
             sequenceToIds.put(seq, ids);
         }
-        ////logger.debug("************************");
+        ////System.err.println("************************");
         // check if inside the ids, there is a BP that we will replace by an
         // existing IG in the tree
         for (String seq : sequenceToIds.keySet()) {
@@ -448,7 +448,7 @@ public class InputParser {
             for (String id : ids) {
                 if (id.matches("BP\\d+") && ids.size() > 1) { // it's a number =
                     // BP
-                    //logger.debug("This BP: " + id + " will be replaced by an Ig , ids are " + ids);
+                    //System.err.println("This BP: " + id + " will be replaced by an Ig , ids are " + ids);
                     bpIsIg.add(id);
                 }
             }
@@ -504,7 +504,7 @@ public class InputParser {
             for (String id : ids) {
                 if (id.matches("BP\\d+") && ids.size() > 1) { // it's a number =
                     // BP
-                    //logger.debug("This BP: " + id + " will be replaced by an Ig , ids are " + ids);
+                    //System.err.println("This BP: " + id + " will be replaced by an Ig , ids are " + ids);
                     bpIsIg.add(id);
                 }
             }
@@ -545,12 +545,12 @@ public class InputParser {
                             parentId = cells[1];
                             childId = cells[0];
                             isRoot = true;
-                            //logger.debug("-----------------------SET ROOT----------" + parentId);
+                            //System.err.println("-----------------------SET ROOT----------" + parentId);
                         }
                         Node parentNode = processNode(parentId, isRoot);
                         if (isRoot) {
                             rootNode = parentNode;
-                            //logger.debug("This node is the root " + rootNode.getNodeId());
+                            //System.err.println("This node is the root " + rootNode.getNodeId());
                         }
                         Node childNode = processNode(childId, false);
                         String parentSeq = idToSequence.get(parentId);
@@ -563,18 +563,18 @@ public class InputParser {
                             boolean isAlreadyHere = false;
                             for (Node k : parentNode.getChildren()) {
                                 if (k.getNodeId().equals(childNode.getNodeId())) {
-                                    //logger.debug("child already stored: " + k.getNodeId());
+                                    //System.err.println("child already stored: " + k.getNodeId());
                                     isAlreadyHere = true;
                                 }
                             }
                             if (!isAlreadyHere) {
                                 parentNode.addChild(childNode);
                                 childNode.setParent(parentNode);
-                                // //logger.debug("Parent " + parentNode.getNodeId() +
+                                // //System.err.println("Parent " + parentNode.getNodeId() +
                                 // " and child " + childNode.getNodeId());
                             }
                         }
-                        // //logger.debug("Parent " + parentId + " and child " +
+                        // //System.err.println("Parent " + parentId + " and child " +
                         // childId);
                         index++;
                     }
@@ -586,17 +586,17 @@ public class InputParser {
         //parse newick tree from IgPhyML
         else {
             String newicktree = igPhyMLParser.getNewickTree(cloneId).replaceAll("\\\"", "");
-            //logger.debug("TREE is: " + newicktree);
+            //System.err.println("TREE is: " + newicktree);
             BinaryTree<String> binaryTree = BinaryTree.parseNewick(newicktree);
             String stringTree = binaryTree.toTreeRelationship();
-            //logger.debug(stringTree);
+            //System.err.println(stringTree);
             String firstbp = null;
             //we set the UCA first
             String uca = getUCA(stringTree);
             if (originalBPidtoBPid.containsKey(uca)) {
                 uca = originalBPidtoBPid.get(uca);
             }
-            //logger.debug("We get the UCA: " + uca);
+            //System.err.println("We get the UCA: " + uca);
             Node parNode = processNode(uca, true);
             rootNode = parNode;
             // first use a Scanner to get each line
@@ -611,7 +611,7 @@ public class InputParser {
                         if (originalBPidtoBPid.containsKey(firstbp)) {
                             firstbp = originalBPidtoBPid.get(firstbp);
                         }
-                        //logger.debug("We set relationship with BP1: "+firstbp);
+                        //System.err.println("We set relationship with BP1: "+firstbp);
                         Node childNode = processNode(firstbp, false);
                         String parentSeq = idToSequence.get(uca);
                         String childSeq = idToSequence.get(firstbp);
@@ -623,12 +623,12 @@ public class InputParser {
                             boolean isAlreadyHere = false;
                             for (Node k : parNode.getChildren()) {
                                 if (k.getNodeId().equals(childNode.getNodeId())) {
-                                    //logger.debug("child already stored: " + k.getNodeId());
+                                    //System.err.println("child already stored: " + k.getNodeId());
                                     isAlreadyHere = true;
                                 }
                             }
                             if (!isAlreadyHere) {
-                                //logger.debug("PARENT UCA " + uca + " has CHILD BP " + firstbp);
+                                //System.err.println("PARENT UCA " + uca + " has CHILD BP " + firstbp);
                                 parNode.addChild(childNode);
                                 childNode.setParent(parNode);
                             }
@@ -646,7 +646,7 @@ public class InputParser {
                         if (originalBPidtoBPid.containsKey(childId)) {
                             childId = originalBPidtoBPid.get(childId);
                         }
-                        //logger.debug("Processing " + parentId + " with " + childId);
+                        //System.err.println("Processing " + parentId + " with " + childId);
                         Node parentNode = processNode(parentId, parentIsRoot);
                         Node childNode = processNode(childId, false);
                         String parentSeq = idToSequence.get(parentId);
@@ -659,25 +659,25 @@ public class InputParser {
                             boolean isAlreadyHere = false;
                             for (Node k : parentNode.getChildren()) {
                                 if (k.getNodeId().equals(childNode.getNodeId())) {
-                                    //logger.debug("child already stored: " + k.getNodeId() + " chilnodeId " + childId);
+                                    //System.err.println("child already stored: " + k.getNodeId() + " chilnodeId " + childId);
                                     isAlreadyHere = true;
                                 }
                             }
                             if (!isAlreadyHere) {
-                                //logger.debug("PARENT " + parentId + " has CHILD " + childId);
+                                //System.err.println("PARENT " + parentId + " has CHILD " + childId);
                                 parentNode.addChild(childNode);
                                 childNode.setParent(parentNode);
                             }
                         } else {
-                            //logger.debug("PARENT " + parentId + " and CHILD " + childId + " have same sequences!");
+                            //System.err.println("PARENT " + parentId + " and CHILD " + childId + " have same sequences!");
                         }
                     }
                 }
 
 
             }
-            /*//logger.debug("First bp is " + firstbp);
-            //logger.debug("UCA is " + uca);*/
+            /*//System.err.println("First bp is " + firstbp);
+            //System.err.println("UCA is " + uca);*/
         }
         // we set the levels of the nodes
         setLevelForChildren(rootNode);
@@ -703,7 +703,7 @@ public class InputParser {
             if (sequence.contains("R") || sequence.contains("Y") || sequence.contains("S") || sequence.contains("M")
                     || sequence.contains("K") || sequence.contains("W")) {
                 sequence = processSpecialNuc(node);
-                //logger.debug("Changing UPAC nuc for node " + node.getNodeId());
+                //System.err.println("Changing UPAC nuc for node " + node.getNodeId());
                 seqToCheck = true;
             }
 
@@ -713,7 +713,7 @@ public class InputParser {
                     if (!otherNode.getNodeId().equals(node.getNodeId())) {
                         String seq = idToSequence.get(otherNode.getNodeId());
                         if (seq.equals(sequence)) {
-                            logger.warn("!!!!!! By replacing a UPAC nuc we got the same sequence for " + node.getNodeId()
+                            System.err.println("!!!!!! By replacing a UPAC nuc we got the same sequence for " + node.getNodeId()
                                     + " and " + otherNode.getNodeId());
                             // we remove this BP if its parent or its child has
                             // the same sequence
@@ -730,7 +730,7 @@ public class InputParser {
                                 par.removeChild(node);
                                 par.addChild(otherNode);
                                 nodes.remove(node);
-                                logger.warn(
+                                System.err.println(
                                         "... we remove " + node.getNodeId() + " since his child has the same sequence");
                                 setSeq = false;
                             } else if (otherNode.getNodeId().equals(node.getParent().getNodeId())) {
@@ -742,7 +742,7 @@ public class InputParser {
                                 }
                                 otherNode.removeChild(node);
                                 nodes.remove(node);
-                                logger.warn("... we remove " + node.getNodeId()
+                                System.err.println("... we remove " + node.getNodeId()
                                         + " since his parent has the same sequence");
                                 setSeq = false;
                             }
@@ -770,7 +770,7 @@ public class InputParser {
                     newId += ", " + ig.getFastaId();
                 }
                 // to delete the first ','
-                //logger.debug("changing id " + node.getNodeId() + " with " + newId.substring(2));
+                //System.err.println("changing id " + node.getNodeId() + " with " + newId.substring(2));
                 node.setNodeId(newId.substring(2));
             }
         }
@@ -893,10 +893,10 @@ public class InputParser {
                 }
                 node.setNodeId(nodeId);
                 node.setSequence(sequence); //BUG fixed the 06.05.20
-                //logger.debug("FOR BP "+id+" we call it first "+nodeId);
+                //System.err.println("FOR BP "+id+" we call it first "+nodeId);
                 sequenceToNode.put(sequence, node);
                 // we create an Ig and link it to the node
-                // //logger.debug("Set nodeId: " + nodeId + " with seq " +
+                // //System.err.println("Set nodeId: " + nodeId + " with seq " +
                 // sequence);
                 Ig ig = new Ig(nodeId, sequence);
                 ig.setAlignedSequence(sequence);
@@ -913,7 +913,7 @@ public class InputParser {
                 // node with this
                 // sequence
                 node = sequenceToNode.get(sequence);
-                 //logger.debug("For " + id + " we already have " +node.getNodeId() + " with the same sequence");
+                 //System.err.println("For " + id + " we already have " +node.getNodeId() + " with the same sequence");
                 // we create an Ig and link it to the node if we dont have it
                 // yet!
                 Ig ig = new Ig(id, sequence);
@@ -933,7 +933,7 @@ public class InputParser {
                 }
                 nodeToIgsList.put(node, igsList);
             } else { // the root will always go here first
-                // //logger.debug("Create NODE: " + id);
+                // //System.err.println("Create NODE: " + id);
                 node = new Node();
                 node.setSequence(sequence);
                 node.setNodeId(id);
@@ -954,9 +954,9 @@ public class InputParser {
             }
 
         }
-        // //logger.debug("processed node: "+node.getNodeId());
+        // //System.err.println("processed node: "+node.getNodeId());
         if (!nodes.contains(node)) {
-            //logger.debug("...we add it to nodes array " + node.getNodeId());
+            //System.err.println("...we add it to nodes array " + node.getNodeId());
             nodes.add(node);
         }
         return node;
@@ -981,11 +981,11 @@ public class InputParser {
             // sortedNodesByDistance.get(dist);
             // for (Node node : nodesWithThisDist) {
             for (Node node : sortedNodes) {
-                //logger.debug("---- IMGTgapped, process node "+node.getNodeId());
+                //System.err.println("---- IMGTgapped, process node "+node.getNodeId());
                 if (!node.isRoot()) {
                     String sequence = node.getImgtFormatSequence();
                     if (sequence == null) { // BP case!
-                        //logger.debug("No IMGT format sequence for "+node.getNodeId());
+                        //System.err.println("No IMGT format sequence for "+node.getNodeId());
                         if (!node.hasDeletion() && !rootNode.hasDeletion()) {
                             sequence = getImgtFormattedSequence(rootSequence, node.getSequence());
                         }
@@ -1116,11 +1116,11 @@ public class InputParser {
     }
 
     private void setLevelForChildren(Node node) {
-        ////logger.debug("SET-LEVEL: "+node.getNodeId());
+        ////System.err.println("SET-LEVEL: "+node.getNodeId());
         ArrayList<Node> children = node.getChildren();
         for (int c = 0; c < children.size(); c++) {
             Node child = children.get(c);
-            ////logger.debug("SET-LEVEL-KID: "+child.getNodeId());
+            ////System.err.println("SET-LEVEL-KID: "+child.getNodeId());
             child.setLevel(child.getParent().getLevel() + 1);
             if (child.getChildren().size() > 0) {
                 setLevelForChildren(child);
@@ -1144,9 +1144,9 @@ public class InputParser {
                 int[] nucNumber = getNucNumber(children, position, nuc);
                 int Anumber = nucNumber[0];
                 int Gnumber = nucNumber[1];
-                // //logger.debug("!!! For node " + node.getNodeId() + ", at
+                // //System.err.println("!!! For node " + node.getNodeId() + ", at
                 // position: " + position + " we got a " + nuc);
-                // //logger.debug("In the children, we have number of A " +
+                // //System.err.println("In the children, we have number of A " +
                 // Anumber + " and number of G " + Gnumber);
                 if (Anumber > Gnumber) {
                     replacedNuc = "A";
@@ -1154,16 +1154,16 @@ public class InputParser {
                     replacedNuc = "G";
                 }
                 newSequence = sequence.substring(0, position) + replacedNuc + sequence.substring(position + 1);
-                // //logger.debug("--> previous sequence was: " + sequence + " and
+                // //System.err.println("--> previous sequence was: " + sequence + " and
                 // new one is " + newSequence);
                 sequence = newSequence;
             } else if (nuc == 'Y') { // it is a T or C
                 int[] nucNumber = getNucNumber(children, position, nuc);
                 int Tnumber = nucNumber[0];
                 int Cnumber = nucNumber[1];
-                // //logger.debug("!!! For node " + node.getNodeId() + ", at
+                // //System.err.println("!!! For node " + node.getNodeId() + ", at
                 // position: " + position + " we got a " + nuc);
-                // //logger.debug("In the children, we have number of T " +
+                // //System.err.println("In the children, we have number of T " +
                 // Tnumber + " and number of C " + Cnumber);
                 if (Tnumber > Cnumber) {
                     replacedNuc = "T";
@@ -1171,7 +1171,7 @@ public class InputParser {
                     replacedNuc = "C";
                 }
                 newSequence = sequence.substring(0, position) + replacedNuc + sequence.substring(position + 1);
-                // //logger.debug("--> previous sequence was: " + sequence + " and
+                // //System.err.println("--> previous sequence was: " + sequence + " and
                 // new one is " + newSequence);
                 sequence = newSequence;
             } else if (nuc == 'S') { // it is a G or C
@@ -1219,7 +1219,7 @@ public class InputParser {
                 newSequence = sequence.substring(0, position) + replacedNuc + sequence.substring(position + 1);
                 sequence = newSequence;
             }
-            // //logger.debug("--> previous sequence was: "+sequence);
+            // //System.err.println("--> previous sequence was: "+sequence);
 
             position++;
         }

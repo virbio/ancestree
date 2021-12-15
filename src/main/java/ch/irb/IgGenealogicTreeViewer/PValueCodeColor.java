@@ -22,8 +22,8 @@ package ch.irb.IgGenealogicTreeViewer;
 import java.awt.Color;
 import java.math.BigDecimal;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
+
+
 
 public class PValueCodeColor {
     static Color red1 = new Color(255, 0, 0);
@@ -36,7 +36,7 @@ public class PValueCodeColor {
     static Color green3 = new Color(0, 255, 64);
     static Color green4 = new Color(128, 255, 129);
     static Color green5 = new Color(233, 255, 233);//new Color(255, 196, 196);
-    static Logger logger = LogManager.getLogger(PValueCodeColor.class);
+   
 
     public PValueCodeColor() {
     }

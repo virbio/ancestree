@@ -23,8 +23,8 @@ import java.io.OutputStream;
 
 import javax.swing.*;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
+
+
 
 import ch.irb.currentDirectory.GetSetCurrentDirectory;
 
@@ -38,7 +38,7 @@ import de.erichseifert.vectorgraphics2d.util.PageSize;
  *         EPS format Then the image can be open with Iluustrator.
  */
 public class ExportAsEPSListener implements ActionListener {
-    static Logger logger = LogManager.getLogger(ExportAsEPSListener.class);
+   
     private JPanel jPanel = new JPanel();
     private GetSetCurrentDirectory getSetCurrentDir;
 

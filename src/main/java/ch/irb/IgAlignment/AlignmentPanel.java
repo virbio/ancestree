@@ -47,8 +47,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
 
 import ch.irb.IgGenealogicTreeViewer.SetImgtInfo;
 import ch.irb.kabat.ProcessKabatNumbering;
@@ -59,7 +57,6 @@ import ch.irb.translation.Translator;
 
 @SuppressWarnings("serial")
 public class AlignmentPanel extends JPanel {
-    static Logger logger = LogManager.getLogger(AlignmentPanel.class);
     static AminoAcidProperties aminoAcidProperties = new AminoAcidProperties();
     static Color redColor = new Color(255, 159, 159);
     static Color pinkColor = new Color(255, 191, 191);
@@ -101,7 +98,7 @@ public class AlignmentPanel extends JPanel {
     private SetImgtInfo setImgtInfo = null;
     private TreeMap<Integer, String> positionToCdrFrRegions = new TreeMap<Integer, String>();
     private HashMap<String, ArrayList<Integer>> fromRegionToColumns = new HashMap<String, ArrayList<Integer>>();
-    private ArrayList<Integer> indexWithRegionBorder = new ArrayList<>();
+    private ArrayList<Integer> indexWithRegionBorder = new ArrayList<Integer>();
     private HashMap<String, Boolean> regionON = new HashMap<String, Boolean>();
     private ArrayList<JCheckBoxMenuItem> checkColumns = new ArrayList<JCheckBoxMenuItem>();
     private boolean updateSequenceIdsPanel = false;
@@ -287,7 +284,7 @@ public class AlignmentPanel extends JPanel {
                         if (mode == 1) { // nucleotide mode: if mutation, grey
                             // for UCA, red or green for the Ig,
                             // and dashes if reverse/double mutation
-                            //logger.debug("Processing node " + node.getNodeId() + " with its parent "
+                            //System.err.println("Processing node " + node.getNodeId() + " with its parent "
                             //		+ node.getParent().getNodeId());
                             String nodeSequence = node.getSequence();
                             // HERE we compare the codon with the UCA codon!!
@@ -321,7 +318,7 @@ public class AlignmentPanel extends JPanel {
                             // hydrophilic, charged )
                             String aminoAcid = String.valueOf(box);
                             color = getColorByChemistryAA(aminoAcid);
-                            // logger.debug("we got a color for aa "+aminoAcid+"
+                            // System.err.println("we got a color for aa "+aminoAcid+"
                             // is "+color);
                             if (fromNodeIndexesToColor.containsKey(node)) {
                                 fromIndexToColor = fromNodeIndexesToColor.get(node);
@@ -420,9 +417,9 @@ public class AlignmentPanel extends JPanel {
         String region = "FR1";
         for (int i = 0; i < boxesNumber; i++) {
             String reg = positionToCdrFrRegions.get(i);
-            // logger.debug("For position "+i+" we have region "+reg);
+            // System.err.println("For position "+i+" we have region "+reg);
             if (!reg.equals(region)) {
-                // logger.debug("create a jbutton with lenght " + lenght + " for
+                // System.err.println("create a jbutton with lenght " + lenght + " for
                 // region " + region);
                 indexWithRegionBorder.add(i);
                 region = reg;
@@ -497,7 +494,7 @@ public class AlignmentPanel extends JPanel {
                 if (allNodeGraphs.contains(node)) {// we display if the user
                     // checked the ID
                     String id = node.getNodeId();
-                    // logger.debug("we display id " + id);
+                    // System.err.println("we display id " + id);
                     if (node.hasDuplicateNodes()) {
                         ArrayList<NodeGraph> dup = node.getDuplicatedNodes();
                         for (NodeGraph du : dup) {
@@ -543,7 +540,7 @@ public class AlignmentPanel extends JPanel {
             FlowLayout flowLayout = new FlowLayout(FlowLayout.LEADING, 0, 2);
             setLayout(flowLayout);
             int toAdd = 2;
-            // logger.debug("toadd is "+toAdd);
+            // System.err.println("toadd is "+toAdd);
             if (updateSequenceIdsPanel) {
                 toAdd = 0;
             }
@@ -556,9 +553,9 @@ public class AlignmentPanel extends JPanel {
             int index = 0;
             for (int i = 0; i < boxesNumber; i++) {
                 String reg = positionToCdrFrRegions.get(i);
-                // logger.debug("For position "+i+" we have region "+reg);
+                // System.err.println("For position "+i+" we have region "+reg);
                 if (!reg.equals(region)) {
-                    // logger.debug("create a jbutton with lenght " + lenght + "
+                    // System.err.println("create a jbutton with lenght " + lenght + "
                     // for region " + region);
                     for (int j = index; j < i; j++) {
                         columns.add(j);

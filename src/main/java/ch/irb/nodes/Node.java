@@ -25,8 +25,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
+
+
 
 import ch.irb.IgGenealogicTreeMaker.Ig;
 
@@ -43,7 +43,7 @@ public class Node extends NodeObject {
     /**
 	 * The logger.
      */
-    static Logger logger = LogManager.getLogger(Node.class);
+   
 
     /**
      * The related igs.
@@ -290,7 +290,7 @@ public class Node extends NodeObject {
             }
         }
         if (childToRemove == null) {
-            logger.fatal("Problem here!! We can not remove " + child.getNodeId() + " with parent " + this.getNodeId());
+            System.err.println("Problem here!! We can not remove " + child.getNodeId() + " with parent " + this.getNodeId());
             System.exit(1);
         }
         this.children.remove(childToRemove);
@@ -339,13 +339,13 @@ public class Node extends NodeObject {
      */
     public String getMutationsFromRootAtPosition(Integer position) {
         String mutation = mutationsFromRoot.get(position);
-        // logger.debug("Mutation is " + mutation + " for node " + getNodeId() +
+        // System.err.println("Mutation is " + mutation + " for node " + getNodeId() +
         // " at position " + position.toString());
         if (mutation == null && parentIsSet) {
-            // logger.debug("Mutation is null for node "+getNodeId()+" at
+            // System.err.println("Mutation is null for node "+getNodeId()+" at
             // position "+position.toString());
             if (reverseMutationsFromRootWithAParent.containsKey(parent)) {
-                // logger.debug("get reverse for this parent...");
+                // System.err.println("get reverse for this parent...");
                 if (reverseMutationsFromRootWithAParent.get(parent).containsKey(position)) {
                     mutation = (String) reverseMutationsFromRootWithAParent.get(parent).get(position);
                 }
@@ -396,7 +396,7 @@ public class Node extends NodeObject {
     public void setReverseMutationsFromRoot(Node parent, TreeMap<Integer, String> reverseMutationsFromRoot) {
         reverseMutationsFromRootWithAParent.put(parent, reverseMutationsFromRoot);
         for (Map.Entry<Integer, String> entry : reverseMutationsFromRoot.entrySet()) {
-            logger.debug("For node " + getNodeId() + " with parent " + parent.getNodeId() + " we have reverse "
+            System.err.println("For node " + getNodeId() + " with parent " + parent.getNodeId() + " we have reverse "
                     + entry.getKey().toString() + ": " + entry.getValue());
         }
     }
@@ -453,7 +453,7 @@ public class Node extends NodeObject {
 		if (reverseInformation == null) {
 			reverseInformation = "";
 		}
-        logger.debug("IN NODE " + nodeId + ", we store definitively the reverse mutation at position " + position + ": "
+        System.err.println("IN NODE " + nodeId + ", we store definitively the reverse mutation at position " + position + ": "
                 + revMutation);
         mutationsFromRoot.put(position, revMutation);
         reverseInformation += " // Reverse at position " + position + ": " + revMutation;
@@ -478,7 +478,7 @@ public class Node extends NodeObject {
 			reverseInformation = "";
 		}
         for (Map.Entry<Integer, String> entry : reverseMutationsFromRoot.entrySet()) {
-            logger.debug("IN NODE " + nodeId + ", we store definitively the reverse mutation at position "
+            System.err.println("IN NODE " + nodeId + ", we store definitively the reverse mutation at position "
                     + entry.getKey().toString() + ": " + entry.getValue());
             newMutationsFromRoot.put(entry.getKey(), entry.getValue());
             reverseInformation += " // Reverse at position " + entry.getKey().toString() + ": " + entry.getValue();
@@ -532,7 +532,7 @@ public class Node extends NodeObject {
 			if (doubleMutationInformation == null) {
 				doubleMutationInformation = "";
 			}
-            logger.debug("IN NODE " + nodeId + ", we store definitively the double mutation at position "
+            System.err.println("IN NODE " + nodeId + ", we store definitively the double mutation at position "
                     + position.toString() + ": " + doubleMutation);
             mutationsFromRoot.put(position, doubleMutation);
             doubleMutationInformation += " // Double Mutation at position " + position.toString() + ": "
@@ -583,7 +583,7 @@ public class Node extends NodeObject {
 			doubleMutationInformation = "";
 		}
         for (Map.Entry<Integer, String> entry : doubleMutations.entrySet()) {
-            logger.debug("IN NODE " + nodeId + ", we store the double mutation at position " + entry.getKey().toString()
+            System.err.println("IN NODE " + nodeId + ", we store the double mutation at position " + entry.getKey().toString()
                     + ": " + entry.getValue());
             mutationsFromRoot.put(entry.getKey(), entry.getValue());
             doubleMutationInformation += " // Double Mutation at position " + entry.getKey().toString() + ": "
@@ -669,7 +669,7 @@ public class Node extends NodeObject {
      * will generate all the latest information needed for the XML file.
      */
     public void setInformationForTree() {
-        //logger.debug("Setting info for node " + nodeId + " is root " + isRoot());
+        //System.err.println("Setting info for node " + nodeId + " is root " + isRoot());
         String cellInformation = "";
         String immunizationInformation = "";
         for (int i = 0; i < relatedIgs.size(); i++) {
@@ -692,8 +692,8 @@ public class Node extends NodeObject {
         if (parent != null) {
             String mutationsWithParent = ",";
             String parentSequence = parent.getSequence();
-            //logger.debug("For Node "+getNodeId()+" we have the parent sequence of parent "+parent.getNodeId());
-            //logger.debug(parentSequence);
+            //System.err.println("For Node "+getNodeId()+" we have the parent sequence of parent "+parent.getNodeId());
+            //System.err.println(parentSequence);
             char[] parentSeq = parentSequence.toCharArray();
             char[] seq = sequence.toCharArray();
             int numberOfMutations = 0;
@@ -721,38 +721,38 @@ public class Node extends NodeObject {
      * Prints the info about the node.
      */
     public void printInfoAboutTheNode() {
-        logger.debug("\n\nNode Id: " + nodeId + " is root " + isRoot + " sequence " + sequence);
-        logger.debug("Protein sequence: " + proteinSequence);
+        System.err.println("\n\nNode Id: " + nodeId + " is root " + isRoot + " sequence " + sequence);
+        System.err.println("Protein sequence: " + proteinSequence);
         for (int i = 0; i < relatedIgs.size(); i++) {
-            logger.debug("Related ig is : " + relatedIgs.get(i).getName());
+            System.err.println("Related ig is : " + relatedIgs.get(i).getName());
         }
-        logger.debug("His level is " + level);
+        System.err.println("His level is " + level);
 		if (parent != null)// in the case of the root node it doesnt have parent
 		{
-			logger.debug("His parent is " + parent.getNodeId());
+			System.err.println("His parent is " + parent.getNodeId());
 		}
         if (hasPossibleParents) {
-            logger.debug("It has possible parents: ");
+            System.err.println("It has possible parents: ");
             for (int i = 0; i < possibleParents.size(); i++) {
-                logger.debug("  " + possibleParents.get(i).getNodeId());
+                System.err.println("  " + possibleParents.get(i).getNodeId());
             }
         }
         if (children.size() > 0) {
-            logger.debug("It has children: ");
+            System.err.println("It has children: ");
             for (int i = 0; i < children.size(); i++) {
-                logger.debug("----> " + children.get(i).getNodeId());
+                System.err.println("----> " + children.get(i).getNodeId());
             }
         } else {
-            logger.debug("It has no children!");
+            System.err.println("It has no children!");
         }
-        logger.debug("Number of mutation from root for this node is: " + this.mutationsFromRoot.size());
-        logger.debug("Number of nucleotidic mutations from his parent is: " + numberOfNucMutationsWithParent);
-        logger.debug("Number of AA mutations from his parent is: " + numberOfAAMutationsWithParent);
+        System.err.println("Number of mutation from root for this node is: " + this.mutationsFromRoot.size());
+        System.err.println("Number of nucleotidic mutations from his parent is: " + numberOfNucMutationsWithParent);
+        System.err.println("Number of AA mutations from his parent is: " + numberOfAAMutationsWithParent);
 		if (reverseInformation != null) {
-			logger.debug(reverseInformation);
+			System.err.println(reverseInformation);
 		}
 		if (doubleMutationInformation != null) {
-			logger.debug(doubleMutationInformation);
+			System.err.println(doubleMutationInformation);
 		}
 
     }

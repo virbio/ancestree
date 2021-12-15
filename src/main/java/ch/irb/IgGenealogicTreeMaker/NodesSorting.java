@@ -22,13 +22,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeMap;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
 
 import ch.irb.nodes.Node;
 
 public class NodesSorting {
-    static Logger logger = LogManager.getLogger(NodesSorting.class);
     private ArrayList<Node> allNodes = new ArrayList<>();
     private ArrayList<Node> isNodeACluster = new ArrayList<>();
     private ArrayList<Node> orderedNodes = new ArrayList<>();
@@ -75,7 +72,7 @@ public class NodesSorting {
         TreeMap<Integer, ArrayList<Node>> bpChildren = new TreeMap<Integer, ArrayList<Node>>();
         for (Node child : children) {
             int mutNumWithParent = child.getNumberOfNucMutationsWithParent();
-            //logger.debug("for node "+child.getNodeId()+" the number of mutations with the parent is "+mutNumWithParent);
+            //System.err.println("for node "+child.getNodeId()+" the number of mutations with the parent is "+mutNumWithParent);
             Integer key = mutNumWithParent;
             ArrayList<Node> nodes = new ArrayList<Node>();
             if (child.isBP()) {

@@ -26,8 +26,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import ch.irb.IgGenealogicTreeViewer.AncesTreeConverter.InputParser;
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
+
+
 
 import ch.irb.IgGenealogicTreeViewer.AncesTreeConverter.InputParser;
 import ch.irb.nodes.Node;
@@ -44,7 +44,7 @@ import static java.lang.Integer.parseInt;
  * GraphNode (the mutations with its parent etc..)
  */
 public class IgTreeReader {
-    static Logger logger = LogManager.getLogger(IgTreeReader.class);
+   
     private String xmlFilePath;
     private String projectName;
     @SuppressWarnings("unused")
@@ -99,13 +99,13 @@ public class IgTreeReader {
         if (nodeIds.length > 1) {
             nodeGraph.setNodeId(nodeIds[0]);
             hasDuplicatedNodes = true;
-            // logger.debug("For node "+nodeIds[0]+" we have duplicate");
+            // System.err.println("For node "+nodeIds[0]+" we have duplicate");
         } else { // we have one NodeGraph we can add the number of reads if
             // there are some
             if (hasReadsInId) {
                 if (node.getNodeId().matches(".*_\\d+")) {
                     int reads = parseInt(node.getNodeId().split("_")[1]);
-                    //logger.debug("SET READS "+reads+" for "+node.getNodeId());
+                    //System.err.println("SET READS "+reads+" for "+node.getNodeId());
                     nodeGraph.setReads(reads);
                 } else if (!nodeGraph.isRoot() && !nodeGraph.isBP()) {
                     JOptionPane.showMessageDialog(new JFrame(), "The number of reads was not found in the Ig ID " + node.getNodeId());
@@ -115,7 +115,7 @@ public class IgTreeReader {
             nodeGraph.setNodeId(node.getNodeId());
         }
         nodeGraph.setSequence(node.getSequence());
-        // logger.debug("........setProteinSequence for " + node.getNodeId());
+        // System.err.println("........setProteinSequence for " + node.getNodeId());
         nodeGraph.setProteinSequence();
         nodeGraph.setNumberOfNucMutationsWithParent(node.getNumberOfNucMutationsWithParent());
         nodeGraph.setMutationsWithParent(node.getMutationsWithParent());
@@ -175,7 +175,7 @@ public class IgTreeReader {
             } else {
                 String[] spli = node.getEC50().split("//");
                 for (String s : spli) {
-                    // logger.debug("processing string "+s);
+                    // System.err.println("processing string "+s);
                     String[] sp = s.split(":");
                     if (sp[0].equals(nodeGraph.getNodeId())) {
                         nodeGraph.setEC50(sp[1]);
@@ -196,7 +196,7 @@ public class IgTreeReader {
             } else {
                 String[] spli = node.getComment1().split("//");
                 for (String s : spli) {
-                    // logger.debug("processing string "+s);
+                    // System.err.println("processing string "+s);
                     String[] sp = s.split(":");
                     if (sp[0].equals(nodeGraph.getNodeId())) {
                         nodeGraph.setComment1(sp[1]);
@@ -277,7 +277,7 @@ public class IgTreeReader {
     public void setChildrenForGraphNode(Node node) { // we also set the parent
         if (node.getChildrenForXmlFile() != null) {
             String nodeId = node.getNodeId();
-            //logger.debug("Processing GRAPH NODE nodeId " + nodeId);
+            //System.err.println("Processing GRAPH NODE nodeId " + nodeId);
             String[] nodeIds = nodeId.split(",");
             if (nodeIds.length > 1) {
                 nodeId = nodeIds[0];
@@ -293,8 +293,8 @@ public class IgTreeReader {
                     childId = ids[0];
                 }
                 NodeGraph childGraph = fromIdToNodeGraph.get(childId);
-                //logger.debug("childId is " + childId);
-                // logger.debug("childGraph is " + childGraph.toString());
+                //System.err.println("childId is " + childId);
+                // System.err.println("childGraph is " + childGraph.toString());
                 childrenGraph.add(childGraph);
                 childGraph.setParent(nodeGraph);
                 setChildrenForGraphNode(child);
@@ -314,7 +314,7 @@ public class IgTreeReader {
                 }
                 nodesAtThisLevel.add(node);
                 fromLevelToNodes.put(level, nodesAtThisLevel);
-                // logger.debug("level "+level);
+                // System.err.println("level "+level);
             }
         }
     }
@@ -334,10 +334,10 @@ public class IgTreeReader {
 
     private void setYears(NodeGraph nodeGraph, String immunizationInfo) {
         String[] immuInfos = immunizationInfo.split("// ");
-        // logger.debug("After split, lenght is " + immuInfos.length);
+        // System.err.println("After split, lenght is " + immuInfos.length);
         int index = 0;
         for (String immuInfo : immuInfos) {
-            // logger.debug("immuInfo:" + immuInfo);
+            // System.err.println("immuInfo:" + immuInfo);
             if (index > 0) {// because the first index is null
                 String[] splitt = immuInfo.split("\\s");
                 String nodeId = splitt[0];

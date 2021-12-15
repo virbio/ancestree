@@ -15,8 +15,8 @@
  */
 package ch.irb.ManageFastaFiles;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
+
+
 
 /**
  * @author Mathilde
@@ -25,7 +25,7 @@ import org.apache.logging.log4j.Logger;
  */
 @SuppressWarnings("serial")
 public class FastaFormatException extends Exception {
-    static Logger logger = LogManager.getLogger(FastaFormatException.class);
+   
     private String message;
 
 

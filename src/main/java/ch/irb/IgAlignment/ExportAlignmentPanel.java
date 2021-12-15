@@ -42,8 +42,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
 
 import ch.irb.IgGenealogicTreeViewer.SetImgtInfo;
 import ch.irb.kabat.ProcessKabatNumbering;
@@ -52,7 +50,6 @@ import ch.irb.translation.AminoAcidProperties;
 
 @SuppressWarnings("serial")
 public class ExportAlignmentPanel extends JPanel {
-	static Logger logger = LogManager.getLogger(AlignmentPanel.class);
     static AminoAcidProperties aminoAcidProperties = new AminoAcidProperties();
     static Color redColor = new Color(255, 159, 159);
     static Color pinkColor = new Color(255, 191, 191);
@@ -91,7 +88,7 @@ public class ExportAlignmentPanel extends JPanel {
     private TreeMap<Integer, String> positionToCdrFrRegions = new TreeMap<Integer, String>();
     private ArrayList<Integer> lastPositionOfARegion = new ArrayList<Integer>();
     private HashMap<String, Integer> fromRegionToBoxesNumber = new HashMap<String, Integer>();
-    private ArrayList<Integer> indexWithRegionBorder = new ArrayList<>();
+    private ArrayList<Integer> indexWithRegionBorder = new ArrayList<Integer>();
     private boolean updateSequenceIdsPanel = false;
     private ArrayList<Integer> fromBoxIndexToSequenceIndex = new ArrayList<Integer>();
     private boolean shorterView = false;

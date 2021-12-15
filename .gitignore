@@ -3,4 +3,5 @@ target
 .bsp
 .vscode
 .metals
+.bloop
 log.out

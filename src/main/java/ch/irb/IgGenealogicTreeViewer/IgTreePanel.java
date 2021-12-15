@@ -43,8 +43,8 @@ import java.util.TreeMap;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import org.apache.logging.log4j.LogManager; 
-import org.apache.logging.log4j.Logger;
+
+
 
 import ch.irb.currentDirectory.GetSetCurrentDirectory;
 import ch.irb.nodes.NodeGraph;
@@ -59,7 +59,7 @@ import ch.irb.nodes.NodeGraph;
 @SuppressWarnings("serial")
 public class IgTreePanel extends JPanel {
     private IgTreePanel igTreePanel = this;
-    static Logger logger = LogManager.getLogger(IgTreePanel.class);
+   
     static PValueCodeColor pValueCodeColor = new PValueCodeColor();
     static Color yellowColor = new Color(255, 255, 102);
     static Color pinkColor = new Color(255, 204, 204);
@@ -113,7 +113,7 @@ public class IgTreePanel extends JPanel {
             new Color(76,0,153)));
 
     public IgTreePanel(IgTreeReader igTreeReader, GetSetCurrentDirectory getSetCurrentDir) {
-        //logger.debug("IgTreePanel...");
+        //System.err.println("IgTreePanel...");
         this.setBackground(Color.white);
         this.getSetCurrentDir = getSetCurrentDir;
         // Here we get the path of the project the user loaded
@@ -315,7 +315,7 @@ public class IgTreePanel extends JPanel {
                 NodeGraph node = nodesAtThisLevel.get(h);
                 // 100 pixels is the mini Y dist between a parent and its child
                 float mutationsNumber = node.getNumberOfNucMutationsWithParent();
-                // logger.debug("mut number is "+mutationsNumber);
+                // System.err.println("mut number is "+mutationsNumber);
                 float yDistanceParentChild = 0;
                 if (mutationsNumber != 0) {
                     yDistanceParentChild = (float) ((float) ((1 / Math.log(5)) * 20 * mutationsNumber)
@@ -341,15 +341,15 @@ public class IgTreePanel extends JPanel {
                     newHeight = yToTest + 20;
                 }
                 totalHeight = newHeight;
-                // logger.debug("TOT HEIGHT is "+totalHeight);
+                // System.err.println("TOT HEIGHT is "+totalHeight);
             }
         }
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // logger.debug("repaint IgTREE");
-        // logger.debug("\n\n");
+        // System.err.println("repaint IgTREE");
+        // System.err.println("\n\n");
         Graphics2D gd2 = (Graphics2D) g;
         int w = (int) this.getWidth();// real width of canvas
         int h = (int) this.getHeight(); // real height of canvas
@@ -631,7 +631,7 @@ public class IgTreePanel extends JPanel {
             }
         }
         this.minLevelForLastNode = minLevelForLastNode;
-        //logger.debug("Mini level for last node  is " + minLevelForLastNode);
+        //System.err.println("Mini level for last node  is " + minLevelForLastNode);
     }
 
     public ColorByYear getColorByYear() {
@@ -708,7 +708,7 @@ public class IgTreePanel extends JPanel {
         int x = (int) node.getXCoord();
         int y = (int) node.getYCoord();
         String nodeId = node.getNodeId();
-        // logger.debug("Processing node for GUI: "+node.getNodeId());
+        // System.err.println("Processing node for GUI: "+node.getNodeId());
         Color color = node.getColor();
         if (isEveryThingIsGrey() && isFadingON()) {
             color = Color.white;
@@ -1251,7 +1251,7 @@ public class IgTreePanel extends JPanel {
             for (int i = 0; i < allNodeGraphs.size(); i++) {
                 NodeGraph node = allNodeGraphs.get(i);
                 if (node.containsPoint2D(point2d)) {
-                    // logger.debug("We click node "+node.getNodeId());
+                    // System.err.println("We click node "+node.getNodeId());
                     NodeFrame nodeFrame = new NodeFrame(node, component, igTreePanel);
                     return;
                 }
@@ -1344,7 +1344,7 @@ public class IgTreePanel extends JPanel {
                     readsMx = node.getReads();
                 }
             }
-            //logger.debug("Read max is " + readsMx);
+            //System.err.println("Read max is " + readsMx);
             for (NodeGraph node : allNodeGraphs) {
                 if (node.isRoot()) {
                     node.setColor(rootColor);
@@ -1352,7 +1352,7 @@ public class IgTreePanel extends JPanel {
                     node.setColor(Color.white);
                 } else {
                     double p = (node.getReads() * 100) / totReads;
-                    // logger.debug("For "+node.getNodeId()+" p is "+p);
+                    // System.err.println("For "+node.getNodeId()+" p is "+p);
                     // double red = p < 50 ? 255 : Math.round(256 - (p - 50) *
                     // 5.12);
                     // double green = p > 50 ? 255 : Math.round((p) * 5.12);
